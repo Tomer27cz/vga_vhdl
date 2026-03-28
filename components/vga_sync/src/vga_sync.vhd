@@ -3,15 +3,17 @@ library ieee;
     use ieee.numeric_std.all;
 
 entity vga_sync is
-    port ( clk      : in  std_logic;
-           rst      : in  std_logic;
-           ce       : in  std_logic;
-           hsync    : out std_logic;
-           vsync    : out std_logic;
-           hcount   : out std_logic_vector (9 downto 0);
-           vcount   : out std_logic_vector (9 downto 0);
-           video_on : out std_logic);
-end vga_sync;
+    port (
+        clk      : in  std_logic;
+        rst      : in  std_logic;
+        ce       : in  std_logic;
+        hsync    : out std_logic;
+        vsync    : out std_logic;
+        hcount   : out std_logic_vector (9 downto 0);
+        vcount   : out std_logic_vector (9 downto 0);
+        video_on : out std_logic
+    );
+end entity vga_sync;
 
 architecture behavioral of vga_sync is
     -- 640x480 @ 60Hz timings (Pixel Clock = 25 MHz)
