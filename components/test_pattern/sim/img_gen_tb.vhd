@@ -50,6 +50,7 @@ architecture tb of img_gen_tb is
         port (
             clk      : in  std_logic;
             rst      : in  std_logic;
+            ce       : in  std_logic;
             h_count  : in  std_logic_vector(9 downto 0);
             v_count  : in  std_logic_vector(9 downto 0);
             video_on : in  std_logic;
@@ -85,6 +86,7 @@ begin
         port map (
             clk      => clk,
             rst      => rst,
+            ce       => ce,
             h_count  => hcount,
             v_count  => vcount,
             video_on => video_on,

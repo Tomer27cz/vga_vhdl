@@ -6,6 +6,7 @@ entity img_gen is
     port (
         clk      : in  std_logic;
         rst      : in  std_logic;
+        ce       : in  std_logic;
         h_count  : in  std_logic_vector(9 downto 0);
         v_count  : in  std_logic_vector(9 downto 0);
         video_on : in  std_logic;
@@ -26,7 +27,7 @@ begin
                 red   <= (others => '0');
                 green <= (others => '0');
                 blue  <= (others => '0');
-            else
+            elsif ce = '1' then
                 -- ONLY output colors when video_on is High to protect the blanking intervals
                 if video_on = '1' then
                     h_pos := to_integer(unsigned(h_count));

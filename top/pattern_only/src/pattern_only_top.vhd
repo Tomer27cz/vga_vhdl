@@ -41,6 +41,7 @@ architecture behavioral of pattern_only_top is
         port (
             clk      : in  std_logic;
             rst      : in  std_logic;
+            ce       : in  std_logic;
             h_count  : in  std_logic_vector(9 downto 0);
             v_count  : in  std_logic_vector(9 downto 0);
             video_on : in  std_logic;
@@ -83,6 +84,7 @@ begin
     port map (
         clk      => CLK100MHZ,
         rst      => BTND,
+        ce       => ce,
         h_count  => h_count,
         v_count  => v_count,
         video_on => video_on,
