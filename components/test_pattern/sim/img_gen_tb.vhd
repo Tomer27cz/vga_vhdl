@@ -107,7 +107,10 @@ begin
         -- Process a few horizontal lines
         -- Line at 25MHz takes 32 us (800 pixels * 40 ns per pixel)
         -- 100 us ==> 3 horizontal sweeps
-        wait for 100 us;
+        -- wait for 100 us;
+
+        report "Simulating VGA signals for one full frame...";
+        wait for 17 ms; -- A 640x480 frame @ 60Hz takes ~16.68 ms to complete.
 
         report "Simulation finished.";
         TbSimEnded <= '1';
