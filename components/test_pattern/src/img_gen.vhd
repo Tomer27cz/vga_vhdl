@@ -9,9 +9,9 @@ entity img_gen is
         h_count  : in  std_logic_vector(9 downto 0);
         v_count  : in  std_logic_vector(9 downto 0);
         video_on : in  std_logic;
-        red      : out std_logic_vector(7 downto 0);
-        green    : out std_logic_vector(7 downto 0);
-        blue     : out std_logic_vector(7 downto 0)
+        red      : out std_logic_vector(3 downto 0);
+        green    : out std_logic_vector(3 downto 0);
+        blue     : out std_logic_vector(3 downto 0)
     );
 end entity img_gen;
 
@@ -33,37 +33,37 @@ begin
                     -- EBU Color Bars: White, Yellow, Cyan, Green, Magenta, Red, Blue, Black
 
                     if h_pos < 80 then              -- White
-                        red   <= "11111111"; -- 255
-                        green <= "11111111"; -- 255
-                        blue  <= "11111111"; -- 255
+                        red   <= "1111";
+                        green <= "1111";
+                        blue  <= "1111";
                     elsif h_pos < 160 then          -- Yellow
-                        red   <= "11111111"; -- 255
-                        green <= "11111111"; -- 255
-                        blue  <= "00000000"; -- 0
+                        red   <= "1111";
+                        green <= "1111";
+                        blue  <= "0000";
                     elsif h_pos < 240 then          -- Cyan
-                        red   <= "00000000"; -- 0
-                        green <= "11111111"; -- 255
-                        blue  <= "11111111"; -- 255
+                        red   <= "0000";
+                        green <= "1111";
+                        blue  <= "1111";
                     elsif h_pos < 320 then          -- Green
-                        red   <= "00000000"; -- 0
-                        green <= "11111111"; -- 255
-                        blue  <= "00000000"; -- 0
+                        red   <= "0000";
+                        green <= "1111";
+                        blue  <= "0000";
                     elsif h_pos < 400 then          -- Magenta
-                        red   <= "11111111"; -- 255
-                        green <= "00000000"; -- 0
-                        blue  <= "11111111"; -- 255
+                        red   <= "1111";
+                        green <= "0000";
+                        blue  <= "1111";
                     elsif h_pos < 480 then          -- Red
-                        red   <= "11111111"; -- 255
-                        green <= "00000000"; -- 0
-                        blue  <= "00000000"; -- 0
+                        red   <= "1111";
+                        green <= "0000";
+                        blue  <= "0000";
                     elsif h_pos < 560 then          -- Blue
-                        red   <= "00000000"; -- 0
-                        green <= "00000000"; -- 0
-                        blue  <= "11111111"; -- 255
+                        red   <= "0000";
+                        green <= "0000";
+                        blue  <= "1111";
                     else                            -- Black
-                        red   <= "00000000"; -- 0
-                        green <= "00000000"; -- 0
-                        blue  <= "00000000"; -- 0
+                        red   <= "0000";
+                        green <= "0000";
+                        blue  <= "0000";
                     end if;
                 else
                     red   <= (others => '0');

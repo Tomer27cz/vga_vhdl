@@ -18,9 +18,9 @@ architecture tb of img_gen_tb is
     signal vcount      : std_logic_vector (9 downto 0);
     signal video_on    : std_logic;
 
-    signal red         : std_logic_vector(7 downto 0);
-    signal green       : std_logic_vector(7 downto 0);
-    signal blue        : std_logic_vector(7 downto 0);
+    signal red         : std_logic_vector(3 downto 0);
+    signal green       : std_logic_vector(3 downto 0);
+    signal blue        : std_logic_vector(3 downto 0);
 
     signal TbSimEnded  : std_logic := '0';
 
@@ -53,9 +53,9 @@ architecture tb of img_gen_tb is
             h_count  : in  std_logic_vector(9 downto 0);
             v_count  : in  std_logic_vector(9 downto 0);
             video_on : in  std_logic;
-            red      : out std_logic_vector(7 downto 0);
-            green    : out std_logic_vector(7 downto 0);
-            blue     : out std_logic_vector(7 downto 0)
+            red      : out std_logic_vector(3 downto 0);
+            green    : out std_logic_vector(3 downto 0);
+            blue     : out std_logic_vector(3 downto 0)
         );
     end component;
 
