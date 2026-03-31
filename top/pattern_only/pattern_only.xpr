@@ -98,6 +98,12 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
+      <File Path="../../components/lab_files/debounce.vhd">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <File Path="../../components/vga_sync/src/vga_sync.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
