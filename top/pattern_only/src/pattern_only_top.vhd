@@ -52,23 +52,10 @@ architecture behavioral of pattern_only_top is
     end component img_gen;
 
     signal ce       : std_logic;
-    signal hsync    : std_logic;
-    signal vsync    : std_logic;
     signal h_count  : std_logic_vector(9 downto 0);
     signal v_count  : std_logic_vector(9 downto 0);
     signal video_on : std_logic;
 begin
-
-    -- Delay sync signals by 1 pixel cycle (using ce) to match the color output delay
-    process(CLK100MHZ)
-    begin
-        if rising_edge(CLK100MHZ) then
-            if ce = '1' then
-                VGA_HS <= hsync;
-                VGA_VS <= vsync;
-            end if;
-        end if;
-    end process;
 
     -- Generate 25 MHz pixel clock enable pulse
     clk_en_0 : clk_en
@@ -85,8 +72,8 @@ begin
         clk      => CLK100MHZ,
         rst      => BTND,
         ce       => ce,
-        hsync    => hsync,
-        vsync    => vsync,
+        hsync    => VGA_HS,
+        vsync    => VGA_VS,
         hcount   => h_count,
         vcount   => v_count,
         video_on => video_on

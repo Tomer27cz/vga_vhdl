@@ -39,6 +39,8 @@ begin
             if rst = '1' then
                 h_cnt <= (others => '0');
                 v_cnt <= (others => '0');
+                hsync <= '1'; -- Default inactive state
+                vsync <= '1'; -- Default inactive state
             elsif ce = '1' then
                 -- Horizontal Counter
                 if h_cnt = (H_TOTAL - 1) then
@@ -53,13 +55,23 @@ begin
                 else
                     h_cnt <= h_cnt + 1;
                 end if;
+
+                -- Generate sync pulses (Active Low for 640x480)
+                -- Here match the 1-clock delay of RGB output
+                if (h_cnt >= H_DISPLAY + H_FP) and (h_cnt < H_DISPLAY + H_FP + H_SYNC) then
+                    hsync <= '0';
+                else
+                    hsync <= '1';
+                end if;
+
+                if (v_cnt >= V_DISPLAY + V_FP) and (v_cnt < V_DISPLAY + V_FP + V_SYNC) then
+                    vsync <= '0';
+                else
+                    vsync <= '1';
+                end if;
             end if;
         end if;
     end process;
-
-    -- Generate sync pulses (Active Low for 640x480)
-    hsync <= '0' when (h_cnt >= H_DISPLAY + H_FP) and (h_cnt < H_DISPLAY + H_FP + H_SYNC) else '1';
-    vsync <= '0' when (v_cnt >= V_DISPLAY + V_FP) and (v_cnt < V_DISPLAY + V_FP + V_SYNC) else '1';
 
     -- Enable video only within the visible area
     video_on <= '1' when (h_cnt < H_DISPLAY) and (v_cnt < V_DISPLAY) else '0';
