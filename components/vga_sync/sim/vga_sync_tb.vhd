@@ -39,7 +39,7 @@ architecture tb of vga_sync_tb is
             vsync   : out std_logic;
             hcount  : out std_logic_vector (9 downto 0);
             vcount  : out std_logic_vector (9 downto 0);
-            visible : out std_logic
+            video_on : out std_logic
         );
     end component;
 
@@ -62,7 +62,7 @@ begin
             vsync   => vsync,
             hcount  => hcount,
             vcount  => vcount,
-            visible => visible
+            video_on => visible
         );
 
     clk <= not clk after CLK_PERIOD/2 when TbSimEnded /= '1' else '0';
