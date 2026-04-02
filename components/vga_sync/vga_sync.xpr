@@ -86,6 +86,12 @@
   <FileSets Version="1" Minor="32">
     <FileSet Name="src" Type="DesignSrcs" RelSrcDir="$PSRCDIR/src" RelGenDir="$PGENDIR/src">
       <Filter Type="Srcs"/>
+      <File Path="$PPRDIR/../common/const_pkg.vhd">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <File Path="$PPRDIR/../lab_files/clk_en.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
