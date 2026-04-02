@@ -86,19 +86,19 @@
   <FileSets Version="1" Minor="32">
     <FileSet Name="src" Type="DesignSrcs" RelSrcDir="$PSRCDIR/src" RelGenDir="$PGENDIR/src">
       <Filter Type="Srcs"/>
-      <File Path="../lab_files/clk_en.vhd">
+      <File Path="$PPRDIR/../lab_files/clk_en.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="../vga_sync/src/vga_sync.vhd">
+      <File Path="$PPRDIR/../vga_sync/src/vga_sync.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="src/img_gen.vhd">
+      <File Path="$PPRDIR/src/img_gen.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -117,7 +117,8 @@
       </Config>
     </FileSet>
     <FileSet Name="sim" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim" RelGenDir="$PGENDIR/sim">
-      <File Path="sim/img_gen_tb.vhd">
+      <Filter Type="Srcs"/>
+      <File Path="$PPRDIR/sim/img_gen_tb.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -178,9 +179,7 @@
   <Runs Version="1" Minor="22">
     <Run Id="synth_1" Type="Ft3:Synth" SrcSet="src" Part="xc7a50ticsg324-1L" ConstrsSet="constrs" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="true" WriteIncrSynthDcp="false" State="current" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils/imports/synth_1" AutoRQSDir="$PSRCDIR/utils/imports/synth_1" ParallelReportGen="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2025">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2025"/>
         <Step Id="synth_design"/>
       </Strategy>
       <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2025"/>
@@ -189,9 +188,7 @@
     </Run>
     <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7a50ticsg324-1L" ConstrsSet="constrs" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" SynthRun="synth_1" IncludeInArchive="true" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils/imports/impl_1" AutoRQSDir="$PSRCDIR/utils/imports/impl_1" ParallelReportGen="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2025">
-          <Desc>Default settings for Implementation.</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2025"/>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
