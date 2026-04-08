@@ -6,13 +6,12 @@ entity vga_sync_tb is
 end entity;
 
 architecture tb of vga_sync_tb is
-    -- 100 MHz system clock
-    constant CLK_PERIOD : time := 10 ns;
+    -- ~25.175 MHz pixel clock
+    constant CLK_PERIOD : time := 39.721 ns;
 
     signal clk        : std_logic := '1';
     signal rst        : std_logic;
-    signal ce         : std_logic;
-
+    signal ce         : std_logic := '1';
     signal hsync      : std_logic;
     signal vsync      : std_logic;
     signal hcount     : std_logic_vector (9 downto 0);
@@ -20,15 +19,6 @@ architecture tb of vga_sync_tb is
     signal visible    : std_logic;
 
     signal TbSimEnded : std_logic := '0';
-
-    component clk_en
-        generic (G_MAX : positive := 4);
-        port (
-            clk : in  std_logic;
-            rst : in  std_logic;
-            ce  : out std_logic
-        );
-    end component;
 
     component vga_sync
         port (
@@ -44,14 +34,6 @@ architecture tb of vga_sync_tb is
     end component;
 
 begin
-
-    dut_clk_en : clk_en
-        generic map (G_MAX => 4) -- 25 MHz for VGA
-        port map (
-            clk => clk,
-            rst => rst,
-            ce  => ce
-        );
 
     dut_vga : vga_sync
         port map (

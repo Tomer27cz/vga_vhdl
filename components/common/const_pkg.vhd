@@ -21,7 +21,7 @@ constant C_BALL_SPEED_Y  : integer := 4;
 ----------------------------------------------------------------
 -- VGA Sync Constants
 ----------------------------------------------------------------
--- 640x480 @ 60Hz timings (Pixel Clock = 25 MHz)
+-- 640x480 @ 60Hz timings (Pixel Clock = 25.175 MHz)
 constant H_DISPLAY : integer := 640;                              -- Active video pixels per line
 constant H_FP      : integer := 16;                               -- Front porch (pixels)
 constant H_SYNC    : integer := 96;                               -- Sync pulse width (pixels)

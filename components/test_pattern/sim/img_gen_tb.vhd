@@ -6,32 +6,22 @@ entity img_gen_tb is
 end entity;
 
 architecture tb of img_gen_tb is
-    constant CLK_PERIOD : time := 10 ns; -- 100 MHz clock
+    -- ~25.175 MHz clock
+    constant CLK_PERIOD : time := 39.721 ns;
 
     signal clk         : std_logic := '1';
     signal rst         : std_logic;
-    signal ce          : std_logic;
-
+    signal ce          : std_logic := '1';
     signal hsync       : std_logic;
     signal vsync       : std_logic;
     signal hcount      : std_logic_vector (9 downto 0);
     signal vcount      : std_logic_vector (9 downto 0);
     signal video_on    : std_logic;
-
     signal red         : std_logic_vector(3 downto 0);
     signal green       : std_logic_vector(3 downto 0);
     signal blue        : std_logic_vector(3 downto 0);
 
     signal TbSimEnded  : std_logic := '0';
-
-    component clk_en
-        generic (G_MAX : positive := 4);
-        port (
-            clk : in  std_logic;
-            rst : in  std_logic;
-            ce  : out std_logic
-        );
-    end component;
 
     component vga_sync
         port (
@@ -61,14 +51,6 @@ architecture tb of img_gen_tb is
     end component;
 
 begin
-
-    dut_clk_en : clk_en
-        generic map (G_MAX => 4) -- Clock enable (25 MHz for 640x480 VGA)
-        port map (
-            clk => clk,
-            rst => rst,
-            ce  => ce
-        );
 
     dut_vga : vga_sync
         port map (
@@ -107,7 +89,7 @@ begin
         report "Reset released";
 
         -- Process a few horizontal lines
-        -- Line at 25MHz takes 32 us (800 pixels * 40 ns per pixel)
+        -- Line at 25.175MHz takes 32 us (800 pixels * 40 ns per pixel)
         -- 100 us ==> 3 horizontal sweeps
         -- wait for 100 us;
 
