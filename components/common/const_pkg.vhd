@@ -2,6 +2,21 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 package const_pkg is
+----------------------------------------------------------------
+-- Screen & Object Constants
+----------------------------------------------------------------
+constant C_PADDLE_WIDTH  : integer := 10;
+constant C_PADDLE_HEIGHT : integer := 60;
+constant C_BALL_SIZE     : integer := 10;
+
+-- X positions for paddles are fixed
+constant C_P1_X          : integer := 20;   -- Left side
+constant C_P2_X          : integer := 610;  -- Right side
+
+-- Speeds (Pixels moved per frame)
+constant C_PADDLE_SPEED  : integer := 5;
+constant C_BALL_SPEED_X  : integer := 4;
+constant C_BALL_SPEED_Y  : integer := 4;
 
 ----------------------------------------------------------------
 -- VGA Sync Constants
