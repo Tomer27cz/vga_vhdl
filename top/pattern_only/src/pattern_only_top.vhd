@@ -84,7 +84,7 @@ begin
     generic map (G_MAX => 4)
     port map (
         clk => CLK100MHZ,
-        rst => sys_rst,
+        rst => btnd_debounced,
         ce  => ce_25M
     );
 
@@ -92,7 +92,7 @@ begin
     vga_sync_0 : vga_sync
     port map (
         clk      => CLK100MHZ,
-        rst      => sys_rst,
+        rst      => btnd_debounced,
         ce       => ce_25M,
         hsync    => VGA_HS,
         vsync    => VGA_VS,
@@ -105,7 +105,7 @@ begin
     img_gen_0 : img_gen
     port map (
         clk      => CLK100MHZ,
-        rst      => sys_rst,
+        rst      => btnd_debounced,
         ce       => ce_25M,
         h_count  => h_count,
         v_count  => v_count,
