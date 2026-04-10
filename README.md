@@ -37,11 +37,13 @@ The project includes test benches to verify the functionality of the components.
 
 ### Schematic:
 
-##### Pattern Only Top Level Schematic:
+#### Pattern Only Top Level Schematic:
 
 ![Schematic img](.github/img/pattern_top_schematic.png)
 
+#### Pong Only Top Level Schematic:
 
+![Schematic img](.github/img/pong_top_schematic.png)
 
 
 
