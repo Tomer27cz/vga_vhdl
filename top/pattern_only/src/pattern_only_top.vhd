@@ -15,13 +15,12 @@ end entity pattern_only_top;
 
 architecture behavioral of pattern_only_top is
 
-    -- Clocking Wizard (Generate 25.175 MHz from 100 MHz)
-    component clk_wiz_0
+    component clk_en is
+        generic ( G_MAX : positive );
         port (
-            clk_out1 : out std_logic;
-            reset    : in  std_logic;
-            locked   : out std_logic;
-            clk_in1  : in  std_logic
+            clk : in  std_logic;
+            rst : in  std_logic;
+            ce  : out std_logic
         );
     end component;
 
@@ -62,9 +61,7 @@ architecture behavioral of pattern_only_top is
         );
     end component debounce;
 
-    signal clk_25_175     : std_logic;
-    signal locked         : std_logic;
-    signal sys_rst        : std_logic;
+    signal ce_25M         : std_logic;
     signal h_count        : std_logic_vector(9 downto 0);
     signal v_count        : std_logic_vector(9 downto 0);
     signal video_on       : std_logic;
@@ -81,23 +78,22 @@ begin
         btn_press   => open
     );
 
-    -- Clocking Wizard IP
-    clk_wiz_inst : clk_wiz_0
+    -- Clock enable generator: 100 MHz / 4 = 25 MHz
+    -- 25 MHz is close enough to 25.175 MHz for standard 640x480 VGA displays
+    clk_en_inst : clk_en
+    generic map (G_MAX => 4)
     port map (
-        clk_out1 => clk_25_175,
-        reset    => '0',
-        locked   => locked,
-        clk_in1  => CLK100MHZ
+        clk => CLK100MHZ,
+        rst => sys_rst,
+        ce  => ce_25M
     );
-
-    sys_rst <= btnd_debounced or (not locked);
 
     -- Generate VGA synchronisation
     vga_sync_0 : vga_sync
     port map (
-        clk      => clk_25_175,
+        clk      => CLK100MHZ,
         rst      => sys_rst,
-        ce       => '1',
+        ce       => ce_25M,
         hsync    => VGA_HS,
         vsync    => VGA_VS,
         hcount   => h_count,
@@ -108,9 +104,9 @@ begin
     -- Generate Test Image (SMPTE Color Bars)
     img_gen_0 : img_gen
     port map (
-        clk      => clk_25_175,
+        clk      => CLK100MHZ,
         rst      => sys_rst,
-        ce       => '1',
+        ce       => ce_25M,
         h_count  => h_count,
         v_count  => v_count,
         video_on => video_on,
