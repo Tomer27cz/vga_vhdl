@@ -1,5 +1,12 @@
 # vga_vhdl
 
+![Maintained](https://img.shields.io/maintenance/yes/2026)
+[![GitHub license](https://img.shields.io/github/license/Tomer27cz/vga_vhdl)](https://img.shields.io/github/license/Tomer27cz/vga_vhdl/blob/master/LICENSE)
+![GitHub Repo stars](https://img.shields.io/github/stars/Tomer27cz/vga_vhdl?style=flat)
+![GitHub issues](https://img.shields.io/github/issues/Tomer27cz/vga_vhdl?style=flat)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/Tomer27cz/vga_vhdl)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Tomer27cz/vga_vhdl)
+
 ## Team Members
 * **[Tomáš Lohynský](https://github.com/Tomer27cz) (270965)** - Team leader, overall architectural design, VHDL implementation, and integration
 * **[Jan Tříletý](https://github.com/TriletyJ) (270374)** - Project documentation (README), poster design, and final presentation preparation
