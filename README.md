@@ -57,4 +57,6 @@ Detailed documentation, interfaces, and testbenches for individual modules can b
 * `pong_only.vhd`: Connects `vga_sync`, `pong_physics`, and `pong_draw`.
 * `vga_top.vhd`: Using a multiplexer, we can toggle between displaying the test pattern and the Pong game.
 
-**[physical setup image]**
+## Physical Setup
+
+- TODO: add image
