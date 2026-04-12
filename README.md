@@ -29,6 +29,11 @@ Two switchable modes are implemented:
 * **Pixel Tracking:** Calculates current `x` and `y` pixel coordinates.
 * **Game Physics (Pong):** Ball movement, paddle control, wall bouncing, and collision detection.
 
+## Possible Future Enhancements
+* **Score Display:** Implement a 7-segment display to show player scores.
+* **Score Display on VGA:** Render player scores directly on the VGA output.
+* **AI Opponent:** Implement a simple AI for single-player mode.
+
 ## Top-Level Schematic
 
 ### Pattern Only Top Level:
@@ -70,7 +75,7 @@ Detailed documentation, interfaces, and testbenches for individual modules can b
 
 * `pattern_only.vhd`: Connects `vga_sync` and `img_gen`.
 * `pong_only.vhd`: Connects `vga_sync`, `pong_physics`, and `pong_draw`.
-* `vga_top.vhd`: Using a multiplexer, we can toggle between displaying the test pattern and the Pong game.
+* TODO: `vga_top.vhd`: Using a multiplexer, we can toggle between displaying the test pattern and the Pong game.
 
 ## Physical Setup
 
