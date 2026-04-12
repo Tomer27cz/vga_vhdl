@@ -33,6 +33,12 @@ To ensure proper visual overlap, elements are drawn in the following Z-order (bo
 
 **Blanking Intervals:** When `video_on = '0'`, all RGB outputs must be driven to zero (`0000`) to comply with standard VGA timing and prevent monitor desynchronization.
 
+## Simulated Output
+
+The following simulation demonstrates the rendering of the Pong game elements based on the provided inputs.
+
+![pong_draw_sim](img/pong_draw/pong_draw_sim.svg)
+
 ## Test Bench - [pong_draw_tb.vhd](../components/pong_draw/sim/pong_draw_tb.vhd)
 
 ![pong_draw_tb](img/pong_draw/pong_draw_tb.png)

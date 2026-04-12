@@ -7,6 +7,11 @@
 ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/Tomer27cz/vga_vhdl)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Tomer27cz/vga_vhdl)
 
+<div >
+    <img src=".github/img/img_gen/SMPTE_Color_Bars.svg" alt="SMPTE Color Bars" width="400"/>
+    <img src=".github/img/pong_draw/pong_draw_sim.svg" alt="Pong Game Simulation" width="400"/>
+</div>
+
 ## Team Members
 * **[Tomáš Lohynský](https://github.com/Tomer27cz) (270965)** - Team leader, overall architectural design, VHDL implementation, and integration
 * **[Jan Tříletý](https://github.com/TriletyJ) (270374)** - Project documentation (README), poster design, and final presentation preparation

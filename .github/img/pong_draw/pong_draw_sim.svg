@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" width="640" height="480" shape-rendering="crispEdges">
+  <rect x="0" y="0" width="640" height="480" fill="#000000" />
+  
+  <line x1="320" y1="0" x2="320" y2="480" stroke="#444444" stroke-width="3" stroke-dasharray="8, 8" />
+  
+  <rect x="20" y="150" width="10" height="60" fill="#FFFFFF" />
+  <rect x="610" y="270" width="10" height="60" fill="#FFFFFF" />
+  
+  <rect x="318" y="200" width="10" height="10" fill="#FFFF00" />
+</svg>
