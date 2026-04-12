@@ -1,7 +1,7 @@
 # PONG_PHYSICS Component
 
-The `pong_physics` component serves as the central game engine. 
-It manages the states, coordinates, collision logic, and scoring of the game, completely independent of any graphical rendering.
+The `pong_physics` component serves as the central game engine.
+It manages the states, coordinates, collision logic, and scoring of the game, independent of graphical rendering.
 
 ## Interface - [pong_physics.vhd](../components/pong_physics/src/pong_physics.vhd)
 
@@ -23,62 +23,59 @@ It manages the states, coordinates, collision logic, and scoring of the game, co
 
 ## Functionality
 
-The `pong_physics` component drives the main gameplay loop on `ce_60hz` clock enable signal. It handles the following core mechanics:
+The `pong_physics` component drives the main gameplay loop on the `ce_60hz` clock enable signal:
 
-* **Paddle Movement:** Updates coordinates (`paddle1_y` and `paddle2_y`) on inputs from the players. Each paddle moves up or down by a fixed amount, constrained within the screen bounds.
-* **Ball Trajectory:** The ball's coordinates (`ball_x` and `ball_y`) are updated every frame by adding the current X and Y velocity vectors.
-* **Wall Collision Detection:** If the ball reaches the top (`<= 0`) or bottom (`>= V_DISPLAY`) edges of the screen, its vertical velocity is inverted.
-* **Paddle Collision Detection:** Uses AABB to check if the ball intersects with any of the paddles. On collision the horizontal velocity is inverted.
-* **Score & Out of Bounds:** If the ball moves past a paddle and leaves the screen (`< 0` or `> H_DISPLAY`), a point is added to the other player. The ball position is reset back to center.
+* **Paddle Movement:** Updates coordinates (`paddle1_y` and `paddle2_y`) based on player inputs, constrained within screen bounds.
+* **Ball Trajectory:** Updates ball coordinates (`ball_x` and `ball_y`) every frame using X and Y velocity vectors.
+* **Wall Collision:** Inverts the ball's vertical velocity if it hits the top (`<= 0`) or bottom (`>= V_DISPLAY`) edges.
+* **Paddle Collision:** Uses AABB to check intersections between the ball and paddles. Inverts horizontal velocity on hit.
+* **Scoring:** If the ball moves past a paddle (`< 0` or `> H_DISPLAY`), a point is awarded, and the ball resets to the center.
 
-Constants for this component can be found in the [const_pkg.vhd](../components/common/const_pkg.vhd) package
+*(Constants for this component are defined in [const_pkg.vhd](../components/common/const_pkg.vhd))*
 
 ### Axis-Aligned Bounding Box (AABB) Collision
 
-AABB (Axis-Aligned Bounding Box) is a collision detection algorithm used to determine if two 2D, non-rotated rectangles overlap.
-It works by projecting the boundaries of both objects onto the X and Y axes and checking for gaps.
+AABB collision detection determines if two 2D, non-rotated rectangles overlap by projecting their boundaries onto the X and Y axes.
 
-In `pong_physics`, an AABB collision occurs when the ball and a paddle intersect. If **all** the following conditions happen simultaneously:
-1. The ball's left edge is less than or equal to the paddle's right edge.
-2. The ball's right edge is greater than or equal to the paddle's left edge.
-3. The ball's top edge is less than or equal to the paddle's bottom edge.
-4. The ball's bottom edge is greater than or equal to the paddle's top edge.
+In `pong_physics`, an intersection occurs when the ball and a paddle overlap on both the X and Y axes simultaneously:
+* `ball.left <= paddle.right` AND `ball.right >= paddle.left`
+* `ball.top <= paddle.bottom` AND `ball.bottom >= paddle.top`
 
 ![AABB Collision](img/pong_physics/aabb.webp)
+
+## Known Issues
+
+* **Type Conversion Bug:** In the current VHDL state, if `sig_ball_x` drops below `0` to trigger a score event, the concurrent type cast `to_unsigned(sig_ball_x, 10)` will fail in simulation because `to_unsigned` strictly expects a `natural` (positive) integer.
 
 ## Logic Diagram
 
 ```mermaid
 flowchart TD
     START([Rising Edge: clk]) --> RST{"rst = '1'?"}
-    RST -- Yes --> RESET_STATE["Reset ball, paddles, and scores to defaults"]
+    RST -- Yes --> RESET_STATE["Reset logic"]
     RST -- No --> CE{"ce_60hz = '1'?"}
     
-    CE -- No --> IDLE([Hold Current State])
-    CE -- Yes --> PADDLES["Update Paddle Y Positions<br>(Based on p1_up/down & p2_up/down)"]
+    CE -- No --> IDLE([Hold State])
+    CE -- Yes --> PADDLES["Update Paddle Y Positions"]
     
-    PADDLES --> BALL["Update Ball Position<br>ball_x += dx<br>ball_y += dy"]
+    PADDLES --> BALL["Update Ball (x += dx, y += dy)"]
     
-    BALL --> WALL_COL{"Wall Collision?<br>(ball_y <= 0 OR >= V_DISPLAY)"}
-    WALL_COL -- Hit Top/Bottom --> REV_DY["Invert Vertical Velocity<br>(dy = -dy)"]
-    WALL_COL -- No Hit --> PAD_COL
+    BALL --> WALL_COL{"Hit Top/Bottom Wall?"}
+    WALL_COL -- Yes --> REV_DY["dy = -dy"]
+    WALL_COL -- No --> PAD_COL
     REV_DY --> PAD_COL
     
-    PAD_COL{"Paddle Collision?<br>(AABB Intersection)"}
-    PAD_COL -- Hit P1 (Left) --> REV_DX1["Bounce Right<br>(dx = C_BALL_SPEED_X)"]
-    PAD_COL -- Hit P2 (Right) --> REV_DX2["Bounce Left<br>(dx = -C_BALL_SPEED_X)"]
-    PAD_COL -- No Hit --> OOB
-    REV_DX1 --> OOB
-    REV_DX2 --> OOB
+    PAD_COL{"Hit Paddle (AABB)?"}
+    PAD_COL -- Yes --> REV_DX["dx = -dx"]
+    PAD_COL -- No --> OOB
+    REV_DX --> OOB
     
-    OOB{"Out of Bounds?<br>(ball_x < 0 OR > H_DISPLAY)"}
-    OOB -- Left Edge --> P2_SCORE["score_p2 += 1<br>Reset Ball to Center"]
-    OOB -- Right Edge --> P1_SCORE["score_p1 += 1<br>Reset Ball to Center"]
-    OOB -- In Bounds --> OUT_MAP
-    P1_SCORE --> OUT_MAP
-    P2_SCORE --> OUT_MAP
+    OOB{"Out of Bounds?"}
+    OOB -- Yes --> SCORE["Update Score & Reset Ball"]
+    OOB -- No --> OUT_MAP
+    SCORE --> OUT_MAP
     
-    OUT_MAP["Assign internal signals to output ports"] --> END([End Process])
+    OUT_MAP["Map to outputs"] --> END([End Process])
 ```
 
 ## Test Bench - [pong_physics_tb.vhd](../components/pong_physics/sim/pong_physics_tb.vhd)
