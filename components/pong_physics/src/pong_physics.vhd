@@ -137,8 +137,8 @@ begin
     paddle1_y <= std_logic_vector(to_unsigned(sig_p1_y,    10));
     paddle2_y <= std_logic_vector(to_unsigned(sig_p2_y,    10));
 
-    ball_x    <= std_logic_vector(to_unsigned(sig_ball_x,  10)) when sig_ball_x >= 0 else (others => '1');
-    ball_y    <= std_logic_vector(to_unsigned(sig_ball_y,  10)) when sig_ball_y >= 0 else (others => '0');
+    ball_x <= std_logic_vector(to_signed(sig_ball_x, 10));
+    ball_y <= std_logic_vector(to_signed(sig_ball_y, 10));
 
     score_p1  <= std_logic_vector(to_unsigned(sig_score_p1, 8));
     score_p2  <= std_logic_vector(to_unsigned(sig_score_p2, 8));
