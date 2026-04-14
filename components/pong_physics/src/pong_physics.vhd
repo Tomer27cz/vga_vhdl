@@ -50,9 +50,9 @@ begin
             if rst = '1' then
                 sig_p1_y    <= (V_DISPLAY / 2) - (C_PADDLE_HEIGHT / 2);
                 sig_p2_y    <= (V_DISPLAY / 2) - (C_PADDLE_HEIGHT / 2);
+
                 sig_ball_x  <= H_DISPLAY / 2;
                 sig_ball_y  <= V_DISPLAY / 2;
-
                 sig_ball_dx <= C_BALL_SPEED_X;
                 sig_ball_dy <= C_BALL_SPEED_Y;
 
@@ -64,16 +64,16 @@ begin
                 -- PADDLE MOVEMENT
                 --------------------------------------------------------
                 -- Player 1
-                if p1_up = '1' and sig_p1_y > 0 then
+                if p1_up = '1' and sig_p1_y >= C_PADDLE_SPEED then
                     sig_p1_y <= sig_p1_y - C_PADDLE_SPEED;
-                elsif p1_down = '1' and (sig_p1_y + C_PADDLE_HEIGHT) < V_DISPLAY then
+                elsif p1_down = '1' and (sig_p1_y + C_PADDLE_HEIGHT + C_PADDLE_SPEED) <= V_DISPLAY then
                     sig_p1_y <= sig_p1_y + C_PADDLE_SPEED;
                 end if;
 
                 -- Player 2
-                if p2_up = '1' and sig_p2_y > 0 then
+                if p2_up = '1' and sig_p2_y >= C_PADDLE_SPEED then
                     sig_p2_y <= sig_p2_y - C_PADDLE_SPEED;
-                elsif p2_down = '1' and (sig_p2_y + C_PADDLE_HEIGHT) < V_DISPLAY then
+                elsif p2_down = '1' and (sig_p2_y + C_PADDLE_HEIGHT + C_PADDLE_SPEED) <= V_DISPLAY then
                     sig_p2_y <= sig_p2_y + C_PADDLE_SPEED;
                 end if;
 
@@ -134,8 +134,10 @@ begin
 
     paddle1_y <= std_logic_vector(to_unsigned(sig_p1_y,    10));
     paddle2_y <= std_logic_vector(to_unsigned(sig_p2_y,    10));
-    ball_x    <= std_logic_vector(to_unsigned(sig_ball_x,  10));
-    ball_y    <= std_logic_vector(to_unsigned(sig_ball_y,  10));
+
+    ball_x    <= std_logic_vector(to_unsigned(sig_ball_x,  10)) when sig_ball_x >= 0 else (others => '1');
+    ball_y    <= std_logic_vector(to_unsigned(sig_ball_y,  10)) when sig_ball_y >= 0 else (others => '0');
+
     score_p1  <= std_logic_vector(to_unsigned(sig_score_p1, 8));
     score_p2  <= std_logic_vector(to_unsigned(sig_score_p2, 8));
 
