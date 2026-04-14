@@ -1,6 +1,7 @@
 library ieee;
     use ieee.std_logic_1164.all;
     use ieee.numeric_std.all;
+    use work.const_pkg.all;
 
 entity img_gen is
     port (
@@ -37,54 +38,54 @@ begin
                     -- SMPTE Color Bars
                     -- ==========================================
 
-                    -- Top Section (67% of screen, lines 0 to 319)
+                    -- Top Section (67% of screen)
                     -- 7 Bars: White, Yellow, Cyan, Green, Magenta, Red, Blue
-                    if v_pos < 320 then
-                        if h_pos < 92 then            -- White
+                    if v_pos < (V_DISPLAY * 67 / 100) then
+                        if h_pos < (H_DISPLAY / 7) then            -- White
                             red   <= "1111"; green <= "1111"; blue  <= "1111";
-                        elsif h_pos < 183 then        -- Yellow
+                        elsif h_pos < (H_DISPLAY * 2 / 7) then     -- Yellow
                             red   <= "1111"; green <= "1111"; blue  <= "0000";
-                        elsif h_pos < 275 then        -- Cyan
+                        elsif h_pos < (H_DISPLAY * 3 / 7) then     -- Cyan
                             red   <= "0000"; green <= "1111"; blue  <= "1111";
-                        elsif h_pos < 366 then        -- Green
+                        elsif h_pos < (H_DISPLAY * 4 / 7) then     -- Green
                             red   <= "0000"; green <= "1111"; blue  <= "0000";
-                        elsif h_pos < 458 then        -- Magenta
+                        elsif h_pos < (H_DISPLAY * 5 / 7) then     -- Magenta
                             red   <= "1111"; green <= "0000"; blue  <= "1111";
-                        elsif h_pos < 549 then        -- Red
+                        elsif h_pos < (H_DISPLAY * 6 / 7) then     -- Red
                             red   <= "1111"; green <= "0000"; blue  <= "0000";
                         else                          -- Blue
                             red   <= "0000"; green <= "0000"; blue  <= "1111";
                         end if;
 
-                        -- Middle Section (8% of screen, lines 320 to 359)
+                        -- Middle Section (8% of screen)
                         -- Castellated: Blue, Black, Magenta, Black, Cyan, Black, White
-                    elsif v_pos < 360 then
-                        if h_pos < 92 then            -- Blue
+                    elsif v_pos < (V_DISPLAY * 75 / 100) then
+                        if h_pos < (H_DISPLAY / 7) then            -- Blue
                             red   <= "0000"; green <= "0000"; blue  <= "1111";
-                        elsif h_pos < 183 then        -- Black
+                        elsif h_pos < (H_DISPLAY * 2 / 7) then     -- Black
                             red   <= "0000"; green <= "0000"; blue  <= "0000";
-                        elsif h_pos < 275 then        -- Magenta
+                        elsif h_pos < (H_DISPLAY * 3 / 7) then     -- Magenta
                             red   <= "1111"; green <= "0000"; blue  <= "1111";
-                        elsif h_pos < 366 then        -- Black
+                        elsif h_pos < (H_DISPLAY * 4 / 7) then     -- Black
                             red   <= "0000"; green <= "0000"; blue  <= "0000";
-                        elsif h_pos < 458 then        -- Cyan
+                        elsif h_pos < (H_DISPLAY * 5 / 7) then     -- Cyan
                             red   <= "0000"; green <= "1111"; blue  <= "1111";
-                        elsif h_pos < 549 then        -- Black
+                        elsif h_pos < (H_DISPLAY * 6 / 7) then     -- Black
                             red   <= "0000"; green <= "0000"; blue  <= "0000";
                         else                          -- White
                             red   <= "1111"; green <= "1111"; blue  <= "1111";
                         end if;
 
-                        -- Bottom Section (25% of screen, lines 360 to 479)
+                        -- Bottom Section (25% of screen)
                         -- -I, White, Q, Black (Simplified Pluge for 4-bit depth)
                     else
-                        if h_pos < 107 then           -- -I (Dark Blue/Indigo)
+                        if h_pos < (H_DISPLAY / 6) then            -- -I (Dark Blue/Indigo)
                             red   <= "0000"; green <= "0000"; blue  <= "1000";
-                        elsif h_pos < 214 then        -- White
+                        elsif h_pos < (H_DISPLAY * 2 / 6) then     -- White
                             red   <= "1111"; green <= "1111"; blue  <= "1111";
-                        elsif h_pos < 320 then        -- Q (Dark Purple)
+                        elsif h_pos < (H_DISPLAY / 2) then         -- Q (Dark Purple)
                             red   <= "0100"; green <= "0000"; blue  <= "1000";
-                        else                          -- Black (covers the Pluge area)
+                        else                                       -- Black (covers the Pluge area)
                             red   <= "0000"; green <= "0000"; blue  <= "0000";
                         end if;
                     end if;
