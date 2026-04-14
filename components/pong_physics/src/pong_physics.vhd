@@ -99,7 +99,8 @@ begin
                 if (sig_ball_x <= C_P1_X + C_PADDLE_WIDTH) and
                     (sig_ball_x + C_BALL_SIZE >= C_P1_X) and
                     (sig_ball_y + C_BALL_SIZE >= sig_p1_y) and
-                    (sig_ball_y <= sig_p1_y + C_PADDLE_HEIGHT) then
+                    (sig_ball_y <= sig_p1_y + C_PADDLE_HEIGHT) and
+                    (sig_ball_dx < 0) then
 
                     sig_ball_dx <= C_BALL_SPEED_X; -- Bounce Right
                 end if;
@@ -108,7 +109,8 @@ begin
                 if (sig_ball_x + C_BALL_SIZE >= C_P2_X) and
                     (sig_ball_x <= C_P2_X + C_PADDLE_WIDTH) and
                     (sig_ball_y + C_BALL_SIZE >= sig_p2_y) and
-                    (sig_ball_y <= sig_p2_y + C_PADDLE_HEIGHT) then
+                    (sig_ball_y <= sig_p2_y + C_PADDLE_HEIGHT) and
+                    (sig_ball_dx > 0) then
 
                     sig_ball_dx <= -C_BALL_SPEED_X; -- Bounce Left
                 end if;
