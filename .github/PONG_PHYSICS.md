@@ -25,27 +25,26 @@ It manages the states, coordinates, collision logic, and scoring of the game, in
 
 The `pong_physics` component drives the main gameplay loop on the `ce_60hz` clock enable signal:
 
-* **Paddle Movement:** Updates coordinates (`paddle1_y` and `paddle2_y`) based on player inputs, constrained within screen bounds.
-* **Ball Trajectory:** Updates ball coordinates (`ball_x` and `ball_y`) every frame using X and Y velocity vectors.
+* **Paddle Movement:** Updates coordinates (`paddle1_y` and `paddle2_y`) based on player inputs, constrained within screen bounds accounting for paddle speed to prevent off-screen rendering.
+* **Ball Trajectory:** Updates ball coordinates (`ball_x` and `ball_y`) every frame using X and Y velocity vectors. Handles safe type conversion for out-of-bounds rendering.
 * **Wall Collision:** Inverts the ball's vertical velocity if it hits the top (`<= 0`) or bottom (`>= V_DISPLAY`) edges.
-* **Paddle Collision:** Uses AABB to check intersections between the ball and paddles. Inverts horizontal velocity on hit.
+* **Paddle Collision:** Uses a directional AABB check for intersections between the ball and paddles. Inverts horizontal velocity on hit.
 * **Scoring:** If the ball moves past a paddle (`< 0` or `> H_DISPLAY`), a point is awarded, and the ball resets to the center.
 
 *(Constants for this component are defined in [const_pkg.vhd](../components/common/const_pkg.vhd))*
 
-### Axis-Aligned Bounding Box (AABB) Collision
+### Directional Axis-Aligned Bounding Box (AABB) Collision
 
 AABB collision detection determines if two 2D, non-rotated rectangles overlap by projecting their boundaries onto the X and Y axes.
 
-In `pong_physics`, an intersection occurs when the ball and a paddle overlap on both the X and Y axes simultaneously:
+The directional checks prevent a "Ghost Bounce" glitch where a player could catch a ball that had already passed them.
+
+In `pong_physics`, an intersection occurs when the ball and a paddle overlap on both the X and Y axes simultaneously **AND** the ball is traveling *towards* the paddle:
 * `ball.left <= paddle.right` AND `ball.right >= paddle.left`
 * `ball.top <= paddle.bottom` AND `ball.bottom >= paddle.top`
+* `ball.dx` is moving towards the paddle (`< 0` for Player 1, `> 0` for Player 2)
 
 ![AABB Collision](img/pong_physics/aabb.webp)
-
-## Known Issues
-
-* **Type Conversion Bug:** In the current VHDL state, if `sig_ball_x` drops below `0` to trigger a score event, the concurrent type cast `to_unsigned(sig_ball_x, 10)` will fail in simulation because `to_unsigned` strictly expects a `natural` (positive) integer.
 
 ## Logic Diagram
 
@@ -65,7 +64,7 @@ flowchart TD
     WALL_COL -- No --> PAD_COL
     REV_DY --> PAD_COL
     
-    PAD_COL{"Hit Paddle (AABB)?"}
+    PAD_COL{"Hit Paddle (Directional AABB)?"}
     PAD_COL -- Yes --> REV_DX["dx = -dx"]
     PAD_COL -- No --> OOB
     REV_DX --> OOB
