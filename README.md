@@ -34,6 +34,11 @@ Two switchable modes are implemented:
 * **Score Display on VGA:** Render player scores directly on the VGA output.
 * **AI Opponent:** Implement a simple AI for single-player mode.
 
+## Changes that will be made in the future
+* **Physics on Vertical Sync:** Currently, the physics updates on a 60Hz ce signal. This will ensure the game state updates once per frame and eliminate any drift between the physics and rendering.
+* **Rework Paddle Movement Logic:** Simplify the logic and ensure that there are no edge cases.
+* **Wait after score:** After a player scores, the ball will reset to the center and wait for a short period before resuming play. This will give players a moment to prepare for the next round.
+
 ## Top-Level Schematic
 
 ### Pattern Only Top Level:
