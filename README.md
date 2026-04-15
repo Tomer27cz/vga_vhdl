@@ -97,7 +97,27 @@ The project is designed for the Digilent Nexys A7-50T FPGA board. Simply connect
 ### 1. Connection
 
 ### 2. Controls
+The game is controlled using the directional push buttons (button cross) on the Nexys A7. Note that the movement is split between the left/right and up/down buttons for two players.
 
+| Player | Action | Button | Description |
+| :--- | :--- | :---: | :--- |
+| **Global** | **Reset** | `BTNC` | Resets the game and ball to the center |
+| **Player 1** | **Move Up** | `BTNU` | Moves the left paddle up |
+| **Player 1** | **Move Down** | `BTNR` | Moves the left paddle down |
+| **Player 2** | **Move Up** | `BTNL` | Moves the right paddle up |
+| **Player 2** | **Move Down** | `BTND` | Moves the right paddle down |
+
+#### Layout Visualization
+To make it easier for players to understand the button cross mapping:
+```text
+          [BTNU] (P1 Up)
+                ^
+ (P2 Up) [BTNL] + [BTNR] (P1 Down)
+                v
+          [BTND] (P2 Down)
+
+          [BTNC] (RESET)
+```
 ### 3. Switching modes
 
 ### 4. Gameplay rules
