@@ -129,7 +129,7 @@ begin
         clk => CLK100MHZ, rst => '0', btn_in => BTND, btn_state => p2_down_sync, btn_press => open
     );
 
-    -- (100 MHz / 4)
+    -- (100 MHz / 4 = 25 MHz pixel clock)
     clk_en_25M : clk_en
     generic map ( G_MAX => 4 )
     port map (
@@ -138,14 +138,8 @@ begin
         ce  => ce_25M
     );
 
-    -- (100 MHz / 1,666,666 ≈ 60 Hz)
-    clk_en_60Hz : clk_en
-    generic map ( G_MAX => 1666666 )
-    port map (
-        clk => CLK100MHZ,
-        rst => rst_sync,
-        ce  => ce_60Hz
-    );
+    -- (60 Hz update rate for physics)
+    ce_60Hz <= '1' when v_count = "0111100000" and h_count = "0000000000" and ce_25M = '1' else '0';
 
     vga_sync_0 : vga_sync
     port map (
