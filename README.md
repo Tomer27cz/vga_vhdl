@@ -87,9 +87,17 @@ Detailed documentation, interfaces, and testbenches for individual modules can b
 The project is designed for the Digilent Nexys A7-50T FPGA board. Simply connect a VGA monitor to the board's VGA port.
 
 - Image of NEXYS A7-50T FPGA board
-- <img src=".github/img/NEXYS_A7.png" alt="Board Image" width="500"/>
+  
+ <img src=".github/img/NEXYS_A7.png" alt="Board Image" width="500"/>
 
 - TODO - write some more informations
 
 ## User Manual
 
+### 1. Connection
+
+### 2. Controls
+
+### 3. Switching modes
+
+### 4. Gameplay rules
