@@ -38,6 +38,9 @@ architecture behavioral of pong_physics is
     signal sig_ball_dx  : integer range -20 to 20;
     signal sig_ball_dy  : integer range -20 to 20;
 
+    -- Delay after scoring to prevent immediate re-scoring
+    signal sig_score_delay : integer range 0 to 60 := 0;
+
     -- Score tracking
     signal sig_score_p1 : integer range 0 to 255 := 0;
     signal sig_score_p2 : integer range 0 to 255 := 0;
@@ -59,6 +62,10 @@ begin
                 sig_score_p1 <= 0;
                 sig_score_p2 <= 0;
 
+                sig_score_delay <= 0;
+
+            elsif ce_60hz = '1' and sig_score_delay > 0 then
+                sig_score_delay <= sig_score_delay - 1;
             elsif ce_60hz = '1' then
                 --------------------------------------------------------
                 -- PADDLE MOVEMENT
@@ -122,6 +129,8 @@ begin
                     -- Ball went past a paddle. Reset to center.
                     sig_ball_x <= H_DISPLAY / 2;
                     sig_ball_y <= V_DISPLAY / 2;
+
+                    sig_ball_dx <= -sig_ball_dx; -- Start moving towards the player who just got scored on
 
                     -- Update score
                     if sig_ball_x < 0 then
