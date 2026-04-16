@@ -33,13 +33,13 @@ architecture behavioral of pong_physics is
 
     -- Ball needs X, Y, and Velocity vectors (dx, dy)
     -- Include negative numbers in case it goes off screen
-    signal sig_ball_x   : integer range -100 to 1000;
-    signal sig_ball_y   : integer range -100 to 1000;
-    signal sig_ball_dx  : integer range -20 to 20;
-    signal sig_ball_dy  : integer range -20 to 20;
+    signal sig_ball_x   : integer range -100 to 1000 := H_DISPLAY / 2;
+    signal sig_ball_y   : integer range -100 to 1000 := V_DISPLAY / 2;
+    signal sig_ball_dx  : integer range -20 to 20 := C_BALL_SPEED_X;
+    signal sig_ball_dy  : integer range -20 to 20 := C_BALL_SPEED_Y;
 
     -- Delay after scoring to prevent immediate re-scoring
-    signal sig_score_delay : integer range 0 to 360 := 0;
+    signal sig_score_delay : integer range 0 to 360 := INITIAL_RESET_DELAY;
 
     -- Score tracking
     signal sig_score_p1 : integer range 0 to 255 := 0;
@@ -63,7 +63,7 @@ begin
                 sig_score_p1 <= 0;
                 sig_score_p2 <= 0;
 
-                sig_score_delay <= 180; -- 3 seconds at 60Hz
+                sig_score_delay <= INITIAL_RESET_DELAY;
 
             elsif ce_60hz = '1' then
                 --------------------------------------------------------
@@ -173,7 +173,7 @@ begin
                     end if;
 
                     -- Start score delay to prevent immediate re-scoring
-                    sig_score_delay <= 60; -- 1 second at 60Hz
+                    sig_score_delay <= SCORE_DELAY_FRAMES;
                 end if;
             end if;
         end if;

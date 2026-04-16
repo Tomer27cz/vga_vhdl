@@ -3,6 +3,14 @@ use ieee.std_logic_1164.all;
 
 package const_pkg is
 ----------------------------------------------------------------
+-- General  Constants
+----------------------------------------------------------------
+
+-- Frames to wait before allowing ball movement
+constant INITIAL_RESET_DELAY  : integer := 180; -- 3 seconds at 60Hz
+constant SCORE_DELAY_FRAMES   : integer := 60;  -- 1 second at 60Hz
+
+----------------------------------------------------------------
 -- Screen & Object Constants
 ----------------------------------------------------------------
 constant C_PADDLE_WIDTH  : integer := 10;
