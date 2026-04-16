@@ -28,23 +28,24 @@ The `pong_physics` component drives the main gameplay loop on the `ce_60hz` cloc
 * **Paddle Movement:** Updates coordinates (`paddle1_y` and `paddle2_y`) based on player inputs, constrained within screen bounds accounting for paddle speed to prevent off-screen rendering.
 * **Ball Trajectory:** Updates ball coordinates (`ball_x` and `ball_y`) every frame using X and Y velocity vectors. Handles safe type conversion for out-of-bounds rendering.
 * **Wall Collision:** Inverts the ball's vertical velocity if it hits the top (`<= 0`) or bottom (`>= V_DISPLAY`) edges.
-* **Paddle Collision:** Uses a directional AABB check for intersections between the ball and paddles. Inverts horizontal velocity on hit.
+* **Paddle Collision & Rebound:** Uses a Front-Face AABB intersection check. When hit it calculates the impact point to change the ball's reflection angle.
 * **Scoring:** If the ball moves past a paddle (`< 0` or `> H_DISPLAY`), a point is awarded, and the ball resets to the center.
 
 *(Constants for this component are defined in [const_pkg.vhd](../components/common/const_pkg.vhd))*
 
-### Directional Axis-Aligned Bounding Box (AABB) Collision
+### Front-Face AABB Collision with Dynamic Rebound
 
-AABB collision detection determines if two 2D, non-rotated rectangles overlap by projecting their boundaries onto the X and Y axes.
+To prevent "Ghost Bounces" or the ball getting trapped inside the paddle, collision detection relies on strict front-face intersection logic.
 
-The directional checks prevent a "Ghost Bounce" glitch where a player could catch a ball that had already passed them.
+An intersection occurs when:
+1. The ball's bounding box straddles the plane of the paddle's front face (`ball.left <= paddle_front` AND `ball.right >= paddle_front`).
+2. The ball overlaps with the paddle's vertical dimensions.
+3. The ball is traveling *towards* the paddle (`ball.dx` is `< 0` for P1, `> 0` for P2).
 
-In `pong_physics`, an intersection occurs when the ball and a paddle overlap on both the X and Y axes simultaneously **AND** the ball is traveling *towards* the paddle:
-* `ball.left <= paddle.right` AND `ball.right >= paddle.left`
-* `ball.top <= paddle.bottom` AND `ball.bottom >= paddle.top`
-* `ball.dx` is moving towards the paddle (`< 0` for Player 1, `> 0` for Player 2)
-
-![AABB Collision](img/pong_physics/aabb.webp)
+When a valid collision occurs, the engine calculates a `hit_offset`—the distance between the center of the ball and the center of the paddle. Based on this offset, the ball's vertical velocity (`dy`) is adjusted into one of five angular segments:
+* **Outer Edges:** Sharp vertical angles.
+* **Middle Sections:** Shallow vertical angles.
+* **Dead Center:** Straight horizontal trajectory (`dy = 0`).
 
 ## Logic Diagram
 
@@ -64,10 +65,11 @@ flowchart TD
     WALL_COL -- No --> PAD_COL
     REV_DY --> PAD_COL
     
-    PAD_COL{"Hit Paddle (Directional AABB)?"}
-    PAD_COL -- Yes --> REV_DX["dx = -dx"]
+    PAD_COL{"Straddles Front Face?"}
+    PAD_COL -- Yes --> CALC_OFFSET["Calculate hit_offset"]
+    CALC_OFFSET --> DYN_REBOUND["Set new dx and dynamic dy"]
     PAD_COL -- No --> OOB
-    REV_DX --> OOB
+    DYN_REBOUND --> OOB
     
     OOB{"Out of Bounds?"}
     OOB -- Yes --> SCORE["Update Score & Reset Ball"]

@@ -48,6 +48,7 @@ architecture behavioral of pong_physics is
 begin
 
     p_physics : process(clk)
+        variable v_hit_offset : integer;
     begin
         if rising_edge(clk) then
             if rst = '1' then
@@ -102,26 +103,56 @@ begin
                 end if;
 
                 --------------------------------------------------------
-                -- PADDLE COLLISIONS (AABB)
+                -- PADDLE COLLISIONS (Front-Face & Dynamic Rebound)
                 --------------------------------------------------------
                 -- Check Player 1 (Left Paddle)
                 if (sig_ball_x <= C_P1_X + C_PADDLE_WIDTH) and
-                    (sig_ball_x + C_BALL_SIZE >= C_P1_X) and
+                    (sig_ball_x + C_BALL_SIZE >= C_P1_X + C_PADDLE_WIDTH) and
                     (sig_ball_y + C_BALL_SIZE >= sig_p1_y) and
                     (sig_ball_y <= sig_p1_y + C_PADDLE_HEIGHT) and
                     (sig_ball_dx < 0) then
 
                     sig_ball_dx <= C_BALL_SPEED_X; -- Bounce Right
+
+                    -- Calculate relative Y hit position (Negative = top half, Positive = bottom half)
+                    v_hit_offset := (sig_ball_y + (C_BALL_SIZE / 2)) - (sig_p1_y + (C_PADDLE_HEIGHT / 2));
+
+                    if v_hit_offset < -15 then
+                        sig_ball_dy <= -5;   -- Sharp Up
+                    elsif v_hit_offset < -5 then
+                        sig_ball_dy <= -2;   -- Shallow Up
+                    elsif v_hit_offset <= 5 then
+                        sig_ball_dy <= 0;    -- Straight Horizontal
+                    elsif v_hit_offset <= 15 then
+                        sig_ball_dy <= 2;    -- Shallow Down
+                    else
+                        sig_ball_dy <= 5;    -- Sharp Down
+                    end if;
                 end if;
 
                 -- Check Player 2 (Right Paddle)
                 if (sig_ball_x + C_BALL_SIZE >= C_P2_X) and
-                    (sig_ball_x <= C_P2_X + C_PADDLE_WIDTH) and
+                    (sig_ball_x <= C_P2_X) and
                     (sig_ball_y + C_BALL_SIZE >= sig_p2_y) and
                     (sig_ball_y <= sig_p2_y + C_PADDLE_HEIGHT) and
                     (sig_ball_dx > 0) then
 
                     sig_ball_dx <= -C_BALL_SPEED_X; -- Bounce Left
+
+                    -- Calculate relative Y hit position
+                    v_hit_offset := (sig_ball_y + (C_BALL_SIZE / 2)) - (sig_p2_y + (C_PADDLE_HEIGHT / 2));
+
+                    if v_hit_offset < -15 then
+                        sig_ball_dy <= -5;
+                    elsif v_hit_offset < -5 then
+                        sig_ball_dy <= -2;
+                    elsif v_hit_offset <= 5 then
+                        sig_ball_dy <= 0;
+                    elsif v_hit_offset <= 15 then
+                        sig_ball_dy <= 2;
+                    else
+                        sig_ball_dy <= 5;
+                    end if;
                 end if;
 
                 --------------------------------------------------------
@@ -151,8 +182,8 @@ begin
     paddle1_y <= std_logic_vector(to_unsigned(sig_p1_y,    10));
     paddle2_y <= std_logic_vector(to_unsigned(sig_p2_y,    10));
 
-    ball_x <= std_logic_vector(to_signed(sig_ball_x, 10));
-    ball_y <= std_logic_vector(to_signed(sig_ball_y, 10));
+    ball_x <= std_logic_vector(to_signed(sig_ball_x,       10));
+    ball_y <= std_logic_vector(to_signed(sig_ball_y,       10));
 
     score_p1  <= std_logic_vector(to_unsigned(sig_score_p1, 8));
     score_p2  <= std_logic_vector(to_unsigned(sig_score_p2, 8));
