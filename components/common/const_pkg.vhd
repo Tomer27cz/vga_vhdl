@@ -32,6 +32,21 @@ constant C_BALL_SPEED_X  : integer := 4;
 constant C_BALL_SPEED_Y  : integer := 4;
 
 ----------------------------------------------------------------
+-- Score Constants
+----------------------------------------------------------------
+constant C_SCORE_Y       : integer := 16;
+
+-- Player 1 Score X Positions (expanding left from center)
+constant C_SCORE_P1_POS1 : integer := 256; -- Closest to center line
+constant C_SCORE_P1_POS2 : integer := 224;
+constant C_SCORE_P1_POS3 : integer := 192; -- Furthest left
+
+-- Player 2 Score X Positions (expanding right from center)
+constant C_SCORE_P2_POS1 : integer := 360; -- Closest to center line
+constant C_SCORE_P2_POS2 : integer := 392;
+constant C_SCORE_P2_POS3 : integer := 424; -- Furthest right
+
+----------------------------------------------------------------
 -- VGA Sync Constants
 ----------------------------------------------------------------
 -- 640x480 @ 60Hz timings (Pixel Clock = 25 MHz)
