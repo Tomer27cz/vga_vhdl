@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" width="100%" max-width="640px" style="background-color: black; border: 2px solid #555;">
+    <rect x="0" y="0" width="640" height="480" fill="black" />
+
+    <line x1="320" y1="0" x2="320" y2="480" stroke="#333" stroke-width="4" stroke-dasharray="16, 16" />
+
+    <g transform="translate(224, 16)" fill="white">
+        <path d="
+            M 8 0 h 4 v 6 h -4 Z 
+            M 4 6 h 8 v 6 h -8 Z 
+            M 0 12 h 4 v 6 h -4 Z 
+            M 8 12 h 4 v 6 h -4 Z 
+            M 8 18 h 4 v 18 h -4 Z 
+            M 0 36 h 20 v 6 h -20 Z" />
+    </g>
+
+    <g transform="translate(256, 16)" fill="white">
+        <path d="
+            M 4 0 h 12 v 6 h -12 Z 
+            M 0 6 h 4 v 6 h -4 Z 
+            M 16 6 h 4 v 6 h -4 Z 
+            M 16 12 h 4 v 6 h -4 Z 
+            M 12 18 h 4 v 6 h -4 Z 
+            M 8 24 h 4 v 6 h -4 Z 
+            M 4 30 h 4 v 6 h -4 Z 
+            M 0 36 h 20 v 6 h -20 Z" />
+    </g>
+
+    <g transform="translate(360, 16)" fill="white">
+        <path d="
+            M 0 0 h 20 v 6 h -20 Z 
+            M 0 6 h 4 v 6 h -4 Z 
+            M 0 12 h 16 v 6 h -16 Z 
+            M 16 18 h 4 v 12 h -4 Z 
+            M 0 30 h 4 v 6 h -4 Z 
+            M 16 30 h 4 v 6 h -4 Z 
+            M 4 36 h 12 v 6 h -12 Z" />
+    </g>
+</svg>
