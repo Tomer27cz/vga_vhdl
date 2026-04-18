@@ -11,6 +11,11 @@ constant INITIAL_RESET_DELAY  : integer := 180; -- 3 seconds at 60Hz
 constant SCORE_DELAY_FRAMES   : integer := 60;  -- 1 second at 60Hz
 
 ----------------------------------------------------------------
+--  AI Constants
+----------------------------------------------------------------
+constant C_AI_DEADZONE   : integer := 10;
+
+----------------------------------------------------------------
 -- Screen & Object Constants
 ----------------------------------------------------------------
 constant C_PADDLE_WIDTH  : integer := 10;
