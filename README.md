@@ -9,7 +9,7 @@
 
 <div >
     <img src=".github/img/img_gen/SMPTE_Color_Bars.svg" alt="SMPTE Color Bars" width="400"/>
-    <img src=".github/img/pong_draw/pong_draw_sim.svg" alt="Pong Game Simulation" width="400"/>
+    <img src=".github/img/pong.svg" alt="Pong Game Simulation" width="400"/>
 </div>
 
 ## Team Members
