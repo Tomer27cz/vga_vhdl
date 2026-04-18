@@ -71,6 +71,7 @@ Detailed documentation, interfaces, and testbenches for individual modules can b
 * **[pong_ai](.github/PONG_AI.md):** Automated opponent that tracks the ball for single-player functionality.
 * **[bin2bcd](.github/BIN2BCD.md):** Converts binary score values to BCD format.
 * **[digit_draw](.github/DIGIT_DRAW.md):** Renders BCD digits on the VGA display for score representation.
+* **[score_draw](.github/SCORE_DRAW.md):** Combines `bin2bcd` and `digit_draw` to display player scores on the VGA output.
 
 *(Additional unused lab files like `display_driver.vhd` and `bin2seg.vhd` are included in the repository for possible future 7-segment score display implementations).*
 
