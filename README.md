@@ -22,17 +22,17 @@ The system generates hardware synchronization signals for a standard VGA monitor
 
 Two switchable modes are implemented:
 * **Static Graphics Test:** SMPTE Color Bars generator to verify display calibration.
-* **Interactive Game:** Implementation of Pong, featuring movement physics, bounce logic, and rendering.
+* **Interactive Game:** Implementation of Pong, featuring movement physics, bounce logic, rendering, and an AI opponent.
 
 ## Functionality and Features
 * **VGA Control:** Generates `HSYNC` and `VSYNC` signals for standard VGA resolution (640x480 @ 60Hz).
 * **Pixel Tracking:** Calculates current `x` and `y` pixel coordinates.
 * **Game Physics (Pong):** Ball movement, paddle control, wall bouncing, and collision detection.
+* **AI Opponent:** An automated opponent logic block that tracks the ball and plays against the user.
 
 ## Possible Future Enhancements
 * **Score Display:** Implement a 7-segment display to show player scores.
 * **Score Display on VGA:** Render player scores directly on the VGA output.
-* **AI Opponent:** Implement a simple AI for single-player mode.
 
 ## Top-Level Schematic
 
@@ -68,6 +68,7 @@ Detailed documentation, interfaces, and testbenches for individual modules can b
 * **[img_gen](.github/IMG_GEN.md):** Generates a test pattern (SMPTE Color Bars).
 * **[pong_physics](.github/PONG_PHYSICS.md):** Game logic, ball movement, and collision detection.
 * **[pong_draw](.github/PONG_DRAW.md):** Generates RGB signals based on the physics engine's coordinates.
+* **[pong_ai](.github/PONG_AI.md):** Automated opponent that tracks the ball for single-player functionality.
 
 *(Additional unused lab files like `display_driver.vhd` and `bin2seg.vhd` are included in the repository for possible future 7-segment score display implementations).*
 
@@ -99,8 +100,8 @@ The game is controlled using the directional push buttons (button cross) on the 
 | **Global** | **Reset** | `BTNC` | Resets the game and ball to the center |
 | **Player 1** | **Move Up** | `BTNU` | Moves the left paddle up |
 | **Player 1** | **Move Down** | `BTNR` | Moves the left paddle down |
-| **Player 2** | **Move Up** | `BTNL` | Moves the right paddle up |
-| **Player 2** | **Move Down** | `BTND` | Moves the right paddle down |
+| **Player 2 / AI** | **Move Up** | `BTNL` | Moves the right paddle up (if not in AI mode) |
+| **Player 2 / AI** | **Move Down** | `BTND` | Moves the right paddle down (if not in AI mode)|
 
 #### Layout Visualization
 To make it easier for players to understand the button cross mapping:
