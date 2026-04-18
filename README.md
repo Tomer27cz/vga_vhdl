@@ -20,19 +20,18 @@
 Design and implement a functional **VGA Controller** in VHDL.
 The system generates hardware synchronization signals for a standard VGA monitor and translates internal logic into an RGB video output.
 
-Two switchable modes are implemented:
+Multiple switchable modes are implemented to demonstrate the controller's capabilities:
 * **Static Graphics Test:** SMPTE Color Bars generator to verify display calibration.
-* **Interactive Game:** Implementation of Pong, featuring movement physics, bounce logic, rendering, and an AI opponent.
+* **Pong Game:** A simple Pong game with two-player controls and real-time score display.
+* **Single Player Mode:** An AI opponent that tracks the ball for a single-player experience.
 
 ## Functionality and Features
 * **VGA Control:** Generates `HSYNC` and `VSYNC` signals for standard VGA resolution (640x480 @ 60Hz).
 * **Pixel Tracking:** Calculates current `x` and `y` pixel coordinates.
 * **Game Physics (Pong):** Ball movement, paddle control, wall bouncing, and collision detection.
 * **AI Opponent:** An automated opponent logic block that tracks the ball and plays against the user.
-
-## Possible Future Enhancements
-* **Score Display:** Implement a 7-segment display to show player scores.
-* **Score Display on VGA:** Render player scores directly on the VGA output.
+* **Score Display:** Real-time score tracking and rendering on the VGA output.
+* **Modular Design:** SoC with individual components for synchronization, graphics generation, game physics, and score rendering.
 
 ## Top-Level Schematic
 
@@ -73,15 +72,13 @@ Detailed documentation, interfaces, and testbenches for individual modules can b
 * **[digit_draw](.github/DIGIT_DRAW.md):** Renders BCD digits on the VGA display for score representation.
 * **[score_draw](.github/SCORE_DRAW.md):** Combines `bin2bcd` and `digit_draw` to display player scores on the VGA output.
 
-*(Additional unused lab files like `display_driver.vhd` and `bin2seg.vhd` are included in the repository for possible future 7-segment score display implementations).*
-
 ## Top-Level Integration
 
 * `pattern_only.vhd`: Connects `vga_sync` and `img_gen`.
 * `pong_only.vhd`: Connects `vga_sync`, `pong_physics`, and `pong_draw`.
 * `pong_single.vhd`: Connects `vga_sync`, `pong_physics`, `pong_draw`, and `pong_ai` for single-player mode.
 * `pong_score.vhd`: Connects `vga_sync`, `pong_physics`, `pong_draw`, and `score_draw` to display scores on the VGA output.
-* TODO: `vga_top.vhd`: Using a multiplexer, we can toggle between displaying the test pattern and the Pong game.
+* TODO: (Main Top) `vga_top.vhd`: Using a multiplexer, we can toggle between displaying the test pattern and the Pong game (with or without AI).
 
 ## Physical Setup
 
@@ -100,13 +97,13 @@ The project is designed for the Digilent Nexys A7-50T FPGA board. Simply connect
 ### 2. Controls
 The game is controlled using the directional push buttons (button cross) on the Nexys A7. Note that the movement is split between the left/right and up/down buttons for two players.
 
-| Player | Action | Button | Description |
-| :--- | :--- | :---: | :--- |
-| **Global** | **Reset** | `BTNC` | Resets the game and ball to the center |
-| **Player 1** | **Move Up** | `BTNU` | Moves the left paddle up |
-| **Player 1** | **Move Down** | `BTNR` | Moves the left paddle down |
-| **Player 2 / AI** | **Move Up** | `BTNL` | Moves the right paddle up (if not in AI mode) |
-| **Player 2 / AI** | **Move Down** | `BTND` | Moves the right paddle down (if not in AI mode)|
+| Player            | Action        | Button | Description                                     |
+|:------------------|:--------------|:------:|:------------------------------------------------|
+| **Global**        | **Reset**     | `BTNC` | Resets the game and ball to the center          |
+| **Player 1**      | **Move Up**   | `BTNU` | Moves the left paddle up                        |
+| **Player 1**      | **Move Down** | `BTNR` | Moves the left paddle down                      |
+| **Player 2 / AI** | **Move Up**   | `BTNL` | Moves the right paddle up (if not in AI mode)   |
+| **Player 2 / AI** | **Move Down** | `BTND` | Moves the right paddle down (if not in AI mode) |
 
 #### Layout Visualization
 To make it easier for players to understand the button cross mapping:
