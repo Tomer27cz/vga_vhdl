@@ -69,6 +69,7 @@ Detailed documentation, interfaces, and testbenches for individual modules can b
 * **[pong_physics](.github/PONG_PHYSICS.md):** Game logic, ball movement, and collision detection.
 * **[pong_draw](.github/PONG_DRAW.md):** Generates RGB signals based on the physics engine's coordinates.
 * **[pong_ai](.github/PONG_AI.md):** Automated opponent that tracks the ball for single-player functionality.
+* **[bin2bcd](.github/BIN2BCD.md):** Converts binary score values to BCD format.
 
 *(Additional unused lab files like `display_driver.vhd` and `bin2seg.vhd` are included in the repository for possible future 7-segment score display implementations).*
 
