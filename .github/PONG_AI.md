@@ -41,12 +41,12 @@ flowchart TD
     
     COMP -->|Ball < Paddle - Deadzone| MOVE_UP["paddle_up = '1'\npaddle_down = '0'"]
     COMP -->|Ball > Paddle + Deadzone| MOVE_DOWN["paddle_up = '0'\npaddle_down = '1'"]
-    COMP -->|Inside Deadzone| STOP["paddle_up = '0'\npaddle_down = '0'"]
+    COMP -->|Inside Deadzone| RESET_STATE
     
     RESET_STATE --> END([End Process])
     MOVE_UP --> END
     MOVE_DOWN --> END
-    STOP --> END
+    IDLE --> END
 ```
 
 ## Test Bench - [pong_ai_tb.vhd](../components/pong_ai/sim/pong_ai_tb.vhd)
