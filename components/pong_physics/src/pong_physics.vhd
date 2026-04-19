@@ -48,16 +48,16 @@ architecture behavioral of pong_physics is
     -- Function to calculate the Y-axis bounce trajectory
     function calc_bounce_dy(offset : integer) return integer is
     begin
-        if offset < -15 then
-            return -5;
-        elsif offset < -5 then
-            return -2;
-        elsif offset <= 5 then
-            return 0;
-        elsif offset <= 15 then
-            return 2;
+        if offset < -C_BOUNCE_THRESH_LARGE then
+            return -C_BOUNCE_VEL_FAST;
+        elsif offset < -C_BOUNCE_THRESH_SMALL then
+            return -C_BOUNCE_VEL_SLOW;
+        elsif offset <= C_BOUNCE_THRESH_SMALL then
+            return C_BOUNCE_VEL_FLAT;
+        elsif offset <= C_BOUNCE_THRESH_LARGE then
+            return C_BOUNCE_VEL_SLOW;
         else
-            return 5;
+            return C_BOUNCE_VEL_FAST;
         end if;
     end function;
 
@@ -112,9 +112,9 @@ begin
                 -- WALL COLLISIONS (Top & Bottom)
                 --------------------------------------------------------
                 if sig_ball_y <= 0 then
-                    sig_ball_dy <= C_BALL_SPEED_Y;  -- Hit top wall, bounce down
+                    sig_ball_dy <= -sig_ball_dy; -- Hit top wall, bounce down
                 elsif (sig_ball_y + C_BALL_SIZE) >= V_DISPLAY then
-                    sig_ball_dy <= -C_BALL_SPEED_Y; -- Hit bottom wall, bounce up
+                    sig_ball_dy <= -sig_ball_dy; -- Hit bottom wall, bounce up
                 end if;
 
                 --------------------------------------------------------

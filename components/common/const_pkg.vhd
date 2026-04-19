@@ -32,6 +32,18 @@ constant C_BALL_SPEED_X  : integer := 4;
 constant C_BALL_SPEED_Y  : integer := 4;
 
 ----------------------------------------------------------------
+-- Physics/Bounce Constants
+----------------------------------------------------------------
+-- Distance from center of paddle to trigger different bounce angles
+constant C_BOUNCE_THRESH_LARGE : integer := 15;
+constant C_BOUNCE_THRESH_SMALL : integer := 5;
+
+-- Resulting Y-velocities based on hit location
+constant C_BOUNCE_VEL_FAST     : integer := 4;
+constant C_BOUNCE_VEL_SLOW     : integer := 2;
+constant C_BOUNCE_VEL_FLAT     : integer := 0;
+
+----------------------------------------------------------------
 -- Score Constants
 ----------------------------------------------------------------
 constant C_SCORE_Y       : integer := 16;
