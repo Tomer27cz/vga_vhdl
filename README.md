@@ -33,13 +33,16 @@ Multiple switchable modes are implemented to demonstrate the controller's capabi
 * **Score Display:** Real-time score tracking and rendering on the VGA output.
 * **Modular Design:** SoC with individual components for synchronization, graphics generation, game physics, and score rendering.
 
-## Top-Level Schematic
+## Top-Level Schematic (will be updated with polished versions)
 
 ### Pattern Only Top Level:
 ![Pattern Schematic](.github/img/pattern_top_schematic.png)
 
 ### Pong Only Top Level:
 ![Pong Schematic](.github/img/pong_top_schematic.png)
+
+### VGA Top Level (with mode selection):
+![VGA Top Schematic](.github/img/vga_top_schematic.png)
 
 ## Hardware Interface (I/O Description)
 
@@ -78,7 +81,7 @@ Detailed documentation, interfaces, and testbenches for individual modules can b
 * `pong_only.vhd`: Connects `vga_sync`, `pong_physics`, and `pong_draw`.
 * `pong_single.vhd`: Connects `vga_sync`, `pong_physics`, `pong_draw`, and `pong_ai` for single-player mode.
 * `pong_score.vhd`: Connects `vga_sync`, `pong_physics`, `pong_draw`, and `score_draw` to display scores on the VGA output.
-* TODO: (Main Top) `vga_top.vhd`: Using a multiplexer, we can toggle between displaying the test pattern and the Pong game (with or without AI).
+* `vga_top.vhd`: (Main Top) Using a multiplexer, toggle between the test pattern and the Pong game (with or without AI).
 
 ## Physical Setup
 
