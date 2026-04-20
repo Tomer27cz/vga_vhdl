@@ -56,6 +56,7 @@ Multiple switchable modes are implemented to demonstrate the controller's capabi
 | `BTNR`      | M17            |   Input   | Player 1 move down (`P1_DOWN`)                   |
 | `BTNL`      | P17            |   Input   | Player 2 move up (`P2_UP`)                       |
 | `BTND`      | P18            |   Input   | Player 2 move down (`P2_DOWN`)                   |
+| `SW`        | J15, L16       |   Input   | Mode selection switches                          |
 | `VGA_HS`    | B11            |  Output   | Horizontal synchronization pulse for the monitor |
 | `VGA_VS`    | B12            |  Output   | Vertical synchronization pulse for the monitor   |
 | `VGA_R`     | A3, B4, C5, A4 |  Output   | Red color channel (RGB)                          |
