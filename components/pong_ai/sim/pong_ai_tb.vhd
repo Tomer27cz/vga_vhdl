@@ -14,6 +14,7 @@ architecture tb of pong_ai_tb is
     signal rst          : std_logic;
     signal ce_60hz      : std_logic := '0';
 
+    signal ball_x       : std_logic_vector(9 downto 0) := (others => '0'); 
     signal ball_y       : std_logic_vector(9 downto 0) := (others => '0');
     signal paddle_y     : std_logic_vector(9 downto 0) := (others => '0');
 
@@ -23,10 +24,15 @@ architecture tb of pong_ai_tb is
     signal TbSimEnded   : std_logic := '0';
 
     component pong_ai
+        generic (
+            G_PADDLE_X     : integer;
+            G_ACTIVATION_X : integer
+        );
         port (
             clk         : in  std_logic;
             rst         : in  std_logic;
             ce_60hz     : in  std_logic;
+            ball_x      : in  std_logic_vector(9 downto 0);
             ball_y      : in  std_logic_vector(9 downto 0);
             paddle_y    : in  std_logic_vector(9 downto 0);
             paddle_up   : out std_logic;
@@ -37,10 +43,15 @@ architecture tb of pong_ai_tb is
 begin
 
     dut_ai : pong_ai
+        generic map (
+            G_PADDLE_X     => C_P1_X,
+            G_ACTIVATION_X => H_DISPLAY / 2
+        )
         port map (
             clk         => clk,
             rst         => rst,
             ce_60hz     => ce_60hz,
+            ball_x      => ball_x,
             ball_y      => ball_y,
             paddle_y    => paddle_y,
             paddle_up   => paddle_up,
@@ -79,13 +90,14 @@ begin
         wait_frames(1);
 
         ----------------------------------------------------------------
-        -- Ball is above the paddle
+        -- Checking upward tracking (Ball in active zone)
         ----------------------------------------------------------------
         report "TEST 1: Checking upward tracking";
         -- Paddle Y = 200 -> Center = 230
         -- Ball Y = 100 -> Center = 105
         paddle_y <= std_logic_vector(to_unsigned(200, 10));
         ball_y   <= std_logic_vector(to_signed(100, 10));
+        ball_x   <= std_logic_vector(to_unsigned(100, 10)); -- Left side (Active)
 
         wait_frames(2);
 
@@ -94,13 +106,14 @@ begin
             severity error;
 
         ----------------------------------------------------------------
-        -- Ball is below the paddle
+        -- Checking downward tracking (Ball in active zone)
         ----------------------------------------------------------------
         report "TEST 2: Checking downward tracking";
         -- Paddle Y = 200 -> Center = 230
         -- Ball Y = 300 -> Center = 305
         paddle_y <= std_logic_vector(to_unsigned(200, 10));
         ball_y   <= std_logic_vector(to_signed(300, 10));
+        ball_x   <= std_logic_vector(to_unsigned(100, 10)); -- Left side (Active)
 
         wait_frames(2);
 
@@ -109,18 +122,37 @@ begin
             severity error;
 
         ----------------------------------------------------------------
-        -- Ball is lined up (inside deadzone)
+        -- Checking deadzone (Ball in active zone)
         ----------------------------------------------------------------
         report "TEST 3: Checking deadzone";
         -- Paddle Y = 200 -> Center = 230
         -- Ball Y = 225 -> Center = 230
         paddle_y <= std_logic_vector(to_unsigned(200, 10));
         ball_y   <= std_logic_vector(to_signed(225, 10));
+        ball_x   <= std_logic_vector(to_unsigned(100, 10)); -- Left side (Active)
 
         wait_frames(2);
 
         assert paddle_up = '0' and paddle_down = '0'
             report "Error: AI should not move when ball is within deadzone."
+            severity error;
+
+        ----------------------------------------------------------------
+        -- Checking inactive zone (Ball on other side of screen)
+        ----------------------------------------------------------------
+        report "TEST 4: Checking inactive zone (ball on right side)";
+        -- Paddle Y = 200 -> Center = 230
+        -- Ball Y = 100 -> Center = 105 (Normally it would move UP)
+        paddle_y <= std_logic_vector(to_unsigned(200, 10));
+        ball_y   <= std_logic_vector(to_signed(100, 10));
+        
+        -- Set ball X to 500 (Right side). Left paddle should ignore it.
+        ball_x   <= std_logic_vector(to_unsigned(500, 10)); 
+
+        wait_frames(2);
+
+        assert paddle_up = '0' and paddle_down = '0'
+            report "Error: AI moved but ball is not on its side of the screen!"
             severity error;
 
         report "Simulation finished successfully without logic errors!";
