@@ -121,7 +121,8 @@ To make it easier for players to understand the button cross mapping:
           [BTNC] (RESET)
 ```
 ### 3. Switching modes
-
+- TODO:
 ### 4. Gameplay rules
 The rules of Pong are straightforward and simple. This classic arcade game simulates table tennis, where you control your "paddle" and try to deflect the ball so that your opponent misses it.
-#### 1. Objective
+#### 4.1. Objective
+The goal is to score more points than your opponent by making the ball ***pass behind your opponent's paddle*** (out of bounds on their side).
