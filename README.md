@@ -123,3 +123,5 @@ To make it easier for players to understand the button cross mapping:
 ### 3. Switching modes
 
 ### 4. Gameplay rules
+The rules of Pong are straightforward and simple. This classic arcade game simulates table tennis, where you control your "paddle" and try to deflect the ball so that your opponent misses it.
+#### 1. Objective
