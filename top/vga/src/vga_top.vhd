@@ -11,8 +11,8 @@ entity vga_top is
         BTNC      : in  std_logic; -- Global Reset
         BTNU      : in  std_logic; -- P1 Up
         BTNR      : in  std_logic; -- P1 Down
-        BTNL      : in  std_logic; -- P2 / AI Up
-        BTND      : in  std_logic; -- P2 / AI Down
+        BTNL      : in  std_logic; -- P2 Up
+        BTND      : in  std_logic; -- P2 Down
 
         -- Switches for Mode Selection
         -- SW(0): Pong / Test Pattern
@@ -75,8 +75,6 @@ architecture Behavioral of vga_top is
     ---------------------------------------------------------------------------
     signal pong_active  : std_logic;
     signal ce_pong_60Hz : std_logic;
-    signal sw_reg       : std_logic;
-    signal mode_reset   : std_logic;
     signal pong_rst     : std_logic;
 
     ---------------------------------------------------------------------------
@@ -235,20 +233,7 @@ begin
     pong_active <= '1' when SW(0) = '1' else '0';
     ce_pong_60Hz <= '1' when (v_count = "0111100000" and h_count = "0000000000" and ce_25M = '1' and pong_active = '1') else '0';
 
-    process(CLK100MHZ)
-    begin
-        if rising_edge(CLK100MHZ) then
-            sw_reg <= SW(0);
-
-            if SW(0) /= sw_reg then
-                mode_reset <= '1';
-            else
-                mode_reset <= '0';
-            end if;
-        end if;
-    end process;
-
-    pong_rst <= rst_sync or mode_reset or not(pong_active);
+    pong_rst <= rst_sync or not(pong_active);
 
     ---------------------------------------------------------------------------
     -- Input Multiplexing
