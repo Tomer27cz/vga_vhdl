@@ -92,7 +92,7 @@ The project is designed for the Digilent Nexys A7-50T FPGA board. Simply connect
   
  <img src=".github/img/NEXYS_A7.png" alt="Board Image" width="500"/>
 
-- TODO - write some more informations
+- [**Official documentation** of NEXYS A7-50T FPGA board](https://digilent.com/reference/programmable-logic/nexys-a7/start)
 
 ## User Manual
 
@@ -126,3 +126,8 @@ To make it easier for players to understand the button cross mapping:
 The rules of Pong are straightforward and simple. This classic arcade game simulates table tennis, where you control your "paddle" and try to deflect the ball so that your opponent misses it.
 #### 4.1. Objective
 The goal is to score more points than your opponent by making the ball ***pass behind your opponent's paddle*** (out of bounds on their side).
+#### 4.2. Gameplay
+- **Paddle movement**: Players can only move their paddle vertically (up and down) to deflect the ball.
+- **Bouncing**: The ball bounces off the top and bottom walls of the playfield and off both players' paddles.
+- **Scoring**: If a player misses the ball and it goes off the screen on their side, the other player scores a point.
+- **Serving**: After each point is scored, the ball is served to the side of the player who just scored.
