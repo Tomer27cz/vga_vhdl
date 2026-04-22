@@ -48,8 +48,8 @@ begin
                     v_pos := to_integer(unsigned(v_count));
                     p1_y  := to_integer(unsigned(paddle1_y));
                     p2_y  := to_integer(unsigned(paddle2_y));
-                    b_x   := to_integer(signed(ball_x));
-                    b_y   := to_integer(signed(ball_y));
+                    b_x   := to_integer(unsigned(ball_x));
+                    b_y   := to_integer(unsigned(ball_y));
 
                     red   <= "0000";
                     green <= "0000";
