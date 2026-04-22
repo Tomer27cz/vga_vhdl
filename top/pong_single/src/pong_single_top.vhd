@@ -1,7 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity pong_only_top is
+entity pong_single_top is
     port (
         CLK100MHZ : in  std_logic;
 
@@ -15,9 +15,9 @@ entity pong_only_top is
         VGA_HS    : out std_logic;
         VGA_VS    : out std_logic
     );
-end entity pong_only_top;
+end entity pong_single_top;
 
-architecture behavioral of pong_only_top is
+architecture behavioral of pong_single_top is
 
     component debounce is
         port (
