@@ -77,14 +77,14 @@ Detailed documentation, interfaces, and testbenches for individual modules can b
 * **[score_draw](.github/SCORE_DRAW.md):** Combines `bin2bcd` and `digit_draw` to display player scores on the VGA output.
 
 ## Main Top-Level Integration
-* `vga_top.vhd`: Using a multiplexer, toggle between the test pattern and the Pong game (with or without AI).
+* [vga_top.vhd](top/vga/src/vga_top.vhd): Using a multiplexer, toggle between the test pattern and the Pong game (with or without AI).
 
 ### Component test Top-Level
 
-* `pattern_only.vhd`: Connects `vga_sync` and `img_gen`.
-* `pong_only.vhd`: Connects `vga_sync`, `pong_physics`, and `pong_draw`.
-* `pong_single.vhd`: Connects `vga_sync`, `pong_physics`, `pong_draw`, and `pong_ai` for single-player mode.
-* `pong_score.vhd`: Connects `vga_sync`, `pong_physics`, `pong_draw`, and `score_draw` to display scores on the VGA output.
+* [pattern_only.vhd](top/pattern_only/src/pattern_only_top.vhd): Connects `vga_sync` and `img_gen`.
+* [pong_only.vhd](top/pong_only/src/pong_only_top.vhd): Connects `vga_sync`, `pong_physics`, and `pong_draw`.
+* [pong_single.vhd](top/pong_single/src/pong_single_top.vhd): Connects `vga_sync`, `pong_physics`, `pong_draw`, and `pong_ai` for single-player mode.
+* [pong_score.vhd](top/pong_score/src/pong_score_top.vhd): Connects `vga_sync`, `pong_physics`, `pong_draw`, and `score_draw` to display scores on the VGA output.
 
 ## Physical Setup
 
