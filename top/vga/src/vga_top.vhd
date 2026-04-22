@@ -15,9 +15,10 @@ entity vga_top is
         BTND      : in  std_logic; -- P2 / AI Down
 
         -- Switches for Mode Selection
-        -- SW(1): AI Pong Mode
-        -- SW(0): 2-Player Pong Mode
-        SW        : in  std_logic_vector(1 downto 0);
+        -- SW(0): Pong / Test Pattern
+        -- SW(1): AI for Player 2
+        -- SW(2): AI for Player 1
+        SW        : in  std_logic_vector(2 downto 0);
 
         -- VGA Outputs
         VGA_HS    : out std_logic;
@@ -59,8 +60,11 @@ architecture Behavioral of vga_top is
     ---------------------------------------------------------------------------
     -- Pong Physics & AI Interconnects
     ---------------------------------------------------------------------------
-    signal ai_up, ai_down               : std_logic;
-    signal p2_up_routed, p2_down_routed : std_logic;
+    signal p1_up, p1_down               : std_logic;
+    signal p2_up, p2_down               : std_logic;
+
+    signal ai_p1_up, ai_p1_down         : std_logic;
+    signal ai_p2_up, ai_p2_down         : std_logic;
 
     signal paddle1_y, paddle2_y         : std_logic_vector(9 downto 0);
     signal ball_x, ball_y               : std_logic_vector(9 downto 0);
@@ -71,7 +75,7 @@ architecture Behavioral of vga_top is
     ---------------------------------------------------------------------------
     signal pong_active  : std_logic;
     signal ce_pong_60Hz : std_logic;
-    signal sw_reg       : std_logic_vector(1 downto 0) := "00";
+    signal sw_reg       : std_logic;
     signal mode_reset   : std_logic;
     signal pong_rst     : std_logic;
 
@@ -228,15 +232,15 @@ begin
     ---------------------------------------------------------------------------
     -- Stop & Reset Logic
     ---------------------------------------------------------------------------
-    pong_active <= '1' when (SW(1) = '1' or SW(0) = '1') else '0';
+    pong_active <= '1' when SW(0) = '1' else '0';
     ce_pong_60Hz <= '1' when (v_count = "0111100000" and h_count = "0000000000" and ce_25M = '1' and pong_active = '1') else '0';
 
     process(CLK100MHZ)
     begin
         if rising_edge(CLK100MHZ) then
-            sw_reg <= SW(1 downto 0);
+            sw_reg <= SW(0);
 
-            if SW(1 downto 0) /= sw_reg then
+            if SW(0) /= sw_reg then
                 mode_reset <= '1';
             else
                 mode_reset <= '0';
@@ -249,8 +253,11 @@ begin
     ---------------------------------------------------------------------------
     -- Input Multiplexing
     ---------------------------------------------------------------------------
-    p2_up_routed   <= ai_up   when SW(1) = '1' else btn_p2_up_sync;
-    p2_down_routed <= ai_down when SW(1) = '1' else btn_p2_down_sync;
+    p1_up   <= ai_p1_up   when SW(2) = '1' else btn_p1_up_sync;
+    p1_down <= ai_p1_down when SW(2) = '1' else btn_p1_down_sync;
+
+    p2_up   <= ai_p2_up   when SW(1) = '1' else btn_p2_up_sync;
+    p2_down <= ai_p2_down when SW(1) = '1' else btn_p2_down_sync;
 
     ---------------------------------------------------------------------------
     -- Master VGA Synchronization
@@ -288,10 +295,10 @@ begin
             clk       => CLK100MHZ,
             rst       => pong_rst,
             ce_60hz   => ce_pong_60Hz,
-            p1_up     => btn_p1_up_sync,
-            p1_down   => btn_p1_down_sync,
-            p2_up     => p2_up_routed,
-            p2_down   => p2_down_routed,
+            p1_up     => p1_up,
+            p1_down   => p1_down,
+            p2_up     => p2_up,
+            p2_down   => p2_down,
             paddle1_y => paddle1_y,
             paddle2_y => paddle2_y,
             ball_x    => ball_x,
@@ -300,7 +307,23 @@ begin
             score_p2  => score_p2
         );
 
-    pong_ai_inst : pong_ai
+    pong_ai_p1_inst : pong_ai
+        generic map (
+            G_PADDLE_X => C_P1_X,
+            G_ACTIVATION_X => (H_DISPLAY / 2)
+        )
+        port map (
+            clk         => CLK100MHZ,
+            rst         => pong_rst,
+            ce_60hz     => ce_pong_60Hz,
+            ball_x      => ball_x,
+            ball_y      => ball_y,
+            paddle_y    => paddle1_y,
+            paddle_up   => ai_p1_up,
+            paddle_down => ai_p1_down
+        );
+
+    pong_ai_p2_inst : pong_ai
         generic map (
             G_PADDLE_X => C_P2_X,
             G_ACTIVATION_X => (H_DISPLAY / 2)
@@ -312,8 +335,8 @@ begin
             ball_x      => ball_x,
             ball_y      => ball_y,
             paddle_y    => paddle2_y,
-            paddle_up   => ai_up,
-            paddle_down => ai_down
+            paddle_up   => ai_p2_up,
+            paddle_down => ai_p2_down
         );
 
     pong_draw_inst : pong_draw
@@ -357,7 +380,7 @@ begin
     ---------------------------------------------------------------------------
     process(SW, test_r, test_g, test_b, pong_r, pong_g, pong_b)
     begin
-        if (SW(1) = '1' or SW(0) = '1') then
+        if SW(0) = '1' then
             VGA_R <= pong_r;
             VGA_G <= pong_g;
             VGA_B <= pong_b;
