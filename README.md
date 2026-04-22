@@ -31,7 +31,7 @@ Multiple switchable modes are implemented to demonstrate the controller's capabi
 * **Game Physics (Pong):** Ball movement, paddle control, wall bouncing, and collision detection.
 * **AI Opponent:** An automated opponent logic block that tracks the ball and plays against the user.
 * **Score Display:** Real-time score tracking and rendering on the VGA output.
-* **Modular Design:** SoC with individual components for synchronization, graphics generation, game physics, and score rendering.
+* **Modular Design:** Individual components for synchronization, graphics generation, game physics, and score rendering.
 
 ## Top-Level Schematic (will be updated with polished versions)
 
@@ -56,7 +56,7 @@ Multiple switchable modes are implemented to demonstrate the controller's capabi
 | `BTNR`      | M17            |   Input   | Player 1 move down (`P1_DOWN`)                   |
 | `BTNL`      | P17            |   Input   | Player 2 move up (`P2_UP`)                       |
 | `BTND`      | P18            |   Input   | Player 2 move down (`P2_DOWN`)                   |
-| `SW`        | J15, L16       |   Input   | Mode selection switches                          |
+| `SW`        | J15, L16, M13  |   Input   | Mode selection switches                          |
 | `VGA_HS`    | B11            |  Output   | Horizontal synchronization pulse for the monitor |
 | `VGA_VS`    | B12            |  Output   | Vertical synchronization pulse for the monitor   |
 | `VGA_R`     | A3, B4, C5, A4 |  Output   | Red color channel (RGB)                          |
@@ -103,13 +103,13 @@ The project is designed for the Digilent Nexys A7-50T FPGA board. Simply connect
 ### 2. Controls
 The game is controlled using the directional push buttons (button cross) on the Nexys A7. Note that the movement is split between the left/right and up/down buttons for two players.
 
-| Player            | Action        | Button | Description                                     |
-|:------------------|:--------------|:------:|:------------------------------------------------|
-| **Global**        | **Reset**     | `BTNC` | Resets the game and ball to the center          |
-| **Player 1**      | **Move Up**   | `BTNU` | Moves the left paddle up                        |
-| **Player 1**      | **Move Down** | `BTNR` | Moves the left paddle down                      |
-| **Player 2 / AI** | **Move Up**   | `BTNL` | Moves the right paddle up (if not in AI mode)   |
-| **Player 2 / AI** | **Move Down** | `BTND` | Moves the right paddle down (if not in AI mode) |
+| Player       | Action        | Button | Description                            |
+|:-------------|:--------------|:------:|:---------------------------------------|
+| **Global**   | **Reset**     | `BTNC` | Resets the game and ball to the center |
+| **Player 1** | **Move Up**   | `BTNU` | Moves the left paddle up               |
+| **Player 1** | **Move Down** | `BTNR` | Moves the left paddle down             |
+| **Player 2** | **Move Up**   | `BTNL` | Moves the right paddle up              |
+| **Player 2** | **Move Down** | `BTND` | Moves the right paddle down            |
 
 #### Layout Visualization
 To make it easier for players to understand the button cross mapping:

@@ -3,8 +3,7 @@
 The `pong_ai` component serves as an automated opponent for the Pong game.
 It calculates the difference between the ball and the paddle, then sends commands to keep the paddle aligned with the ball.
 
-In this updated version, the AI is physically aware of its position on the screen and uses an activation boundary 
-to remain dormant until the ball enters its defensive zone.
+The AI is aware of its position on the screen and uses an activation boundary to remain inactive until the ball enters its defensive zone.
 
 ## Interface - [pong_ai.vhd](../components/pong_ai/src/pong_ai.vhd)
 
