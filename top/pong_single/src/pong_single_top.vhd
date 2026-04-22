@@ -1,5 +1,6 @@
 library ieee;
-use ieee.std_logic_1164.all;
+    use ieee.std_logic_1164.all;
+    use work.const_pkg.all;
 
 entity pong_single_top is
     port (
@@ -69,11 +70,16 @@ architecture behavioral of pong_single_top is
         );
     end component pong_physics;
 
-    component pong_ai
+    component pong_ai is
+        generic (
+            G_PADDLE_X     : integer;
+            G_ACTIVATION_X : integer
+        );
         port (
             clk         : in  std_logic;
             rst         : in  std_logic;
             ce_60hz     : in  std_logic;
+            ball_x      : in  std_logic_vector(9 downto 0);
             ball_y      : in  std_logic_vector(9 downto 0);
             paddle_y    : in  std_logic_vector(9 downto 0);
             paddle_up   : out std_logic;
@@ -177,10 +183,15 @@ begin
         );
 
     pong_ai_0 : pong_ai
+        generic map (
+            G_PADDLE_X => C_P2_X,
+            G_ACTIVATION_X => (H_DISPLAY / 2)
+        )
         port map (
             clk         => CLK100MHZ,
             rst         => rst_sync,
             ce_60hz     => ce_60Hz,
+            ball_x      => ball_x,
             ball_y      => ball_y,
             paddle_y    => paddle2_y,
             paddle_up   => p2_up_sync,

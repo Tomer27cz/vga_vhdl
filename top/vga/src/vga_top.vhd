@@ -1,6 +1,7 @@
 library ieee;
     use ieee.std_logic_1164.all;
     use ieee.numeric_std.all;
+    use work.const_pkg.all;
 
 entity vga_top is
     port (
@@ -142,16 +143,21 @@ architecture Behavioral of vga_top is
     end component;
 
     component pong_ai is
+        generic (
+            G_PADDLE_X     : integer;
+            G_ACTIVATION_X : integer
+        );
         port (
             clk         : in  std_logic;
             rst         : in  std_logic;
             ce_60hz     : in  std_logic;
+            ball_x      : in  std_logic_vector(9 downto 0);
             ball_y      : in  std_logic_vector(9 downto 0);
             paddle_y    : in  std_logic_vector(9 downto 0);
             paddle_up   : out std_logic;
             paddle_down : out std_logic
         );
-    end component;
+    end component pong_ai;
 
     component pong_draw is
         port (
@@ -295,10 +301,15 @@ begin
         );
 
     pong_ai_inst : pong_ai
+        generic map (
+            G_PADDLE_X => C_P2_X,
+            G_ACTIVATION_X => (H_DISPLAY / 2)
+        )
         port map (
             clk         => CLK100MHZ,
             rst         => pong_rst,
             ce_60hz     => ce_pong_60Hz,
+            ball_x      => ball_x,
             ball_y      => ball_y,
             paddle_y    => paddle2_y,
             paddle_up   => ai_up,
