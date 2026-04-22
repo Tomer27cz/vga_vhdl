@@ -84,7 +84,7 @@ Detailed documentation, interfaces, and testbenches for individual modules can b
 * `pong_score.vhd`: Connects `vga_sync`, `pong_physics`, `pong_draw`, and `score_draw` to display scores on the VGA output.
 
 ## Main Top-Level Integration
-* `vga_top.vhd`: (Main Top) Using a multiplexer, toggle between the test pattern and the Pong game (with or without AI).
+* `vga_top.vhd`: Using a multiplexer, toggle between the test pattern and the Pong game (with or without AI).
 
 ## Physical Setup
 
