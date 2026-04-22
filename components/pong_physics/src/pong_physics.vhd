@@ -45,22 +45,6 @@ architecture behavioral of pong_physics is
     signal sig_score_p1 : integer range 0 to 255 := 0;
     signal sig_score_p2 : integer range 0 to 255 := 0;
 
-    -- Function to calculate the Y-axis bounce trajectory
-    function calc_bounce_dy(offset : integer) return integer is
-    begin
-        if offset < -C_BOUNCE_THRESH_LARGE then
-            return -C_BOUNCE_VEL_FAST;
-        elsif offset < -C_BOUNCE_THRESH_SMALL then
-            return -C_BOUNCE_VEL_SLOW;
-        elsif offset <= C_BOUNCE_THRESH_SMALL then
-            return C_BOUNCE_VEL_FLAT;
-        elsif offset <= C_BOUNCE_THRESH_LARGE then
-            return C_BOUNCE_VEL_SLOW;
-        else
-            return C_BOUNCE_VEL_FAST;
-        end if;
-    end function;
-
 begin
 
     p_physics : process(clk)
@@ -111,9 +95,9 @@ begin
                 --------------------------------------------------------
                 -- WALL COLLISIONS (Top & Bottom)
                 --------------------------------------------------------
-                if sig_ball_y <= 0 then
+                if (sig_ball_y <= 0) and (sig_ball_dy < 0) then
                     sig_ball_dy <= -sig_ball_dy; -- Hit top wall, bounce down
-                elsif (sig_ball_y + C_BALL_SIZE) >= V_DISPLAY then
+                elsif ((sig_ball_y + C_BALL_SIZE) >= V_DISPLAY) and (sig_ball_dy > 0) then
                     sig_ball_dy <= -sig_ball_dy; -- Hit bottom wall, bounce up
                 end if;
 
@@ -128,9 +112,6 @@ begin
                     (sig_ball_dx < 0) then
 
                     sig_ball_dx <= C_BALL_SPEED_X; -- Bounce Right
-
-                    -- Calculate relative Y hit position
-                    sig_ball_dy <= calc_bounce_dy((sig_ball_y + (C_BALL_SIZE / 2)) - (sig_p1_y + (C_PADDLE_HEIGHT / 2)));
                 end if;
 
                 -- Check Player 2 (Right Paddle)
@@ -141,9 +122,6 @@ begin
                     (sig_ball_dx > 0) then
 
                     sig_ball_dx <= -C_BALL_SPEED_X; -- Bounce Left
-
-                    -- Calculate relative Y hit position
-                    sig_ball_dy <= calc_bounce_dy((sig_ball_y + (C_BALL_SIZE / 2)) - (sig_p2_y + (C_PADDLE_HEIGHT / 2)));
                 end if;
 
                 --------------------------------------------------------
