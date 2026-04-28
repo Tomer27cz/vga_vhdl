@@ -85,6 +85,7 @@ Detailed documentation, interfaces, and testbenches for individual modules can b
 * [pong_only.vhd](top/pong_only/src/pong_only_top.vhd): Connects `vga_sync`, `pong_physics`, and `pong_draw`.
 * [pong_single.vhd](top/pong_single/src/pong_single_top.vhd): Connects `vga_sync`, `pong_physics`, `pong_draw`, and `pong_ai` for single-player mode.
 * [pong_score.vhd](top/pong_score/src/pong_score_top.vhd): Connects `vga_sync`, `pong_physics`, `pong_draw`, and `score_draw` to display scores on the VGA output.
+* [pong_ai.vhd](top/pong_ai/src/pong_ai_top.vhd): Connects `vga_sync`, `pong_physics`, `pong_draw`, and `pong_ai` so two AI opponents play against each other.
 
 ## Physical Setup
 
