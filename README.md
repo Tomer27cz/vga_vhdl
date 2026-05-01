@@ -33,6 +33,12 @@ Multiple switchable modes are implemented to demonstrate the controller's capabi
 * **Score Display:** Real-time score tracking and rendering on the VGA output.
 * **Modular Design:** Individual components for synchronization, graphics generation, game physics, and score rendering.
 
+## Pong Gameplay Demonstration
+
+Gif demonstration of the Pong game mode, showcasing two-AI gameplay
+
+![Pong Gameplay](.github/img/pong.gif)
+
 ## Top-Level Schematic (will be updated with polished versions)
 
 ### Pattern Only Top Level:
@@ -90,8 +96,6 @@ Detailed documentation, interfaces, and testbenches for individual modules can b
 ## Physical Setup
 
 The project is designed for the Digilent Nexys A7-50T FPGA board. Simply connect a VGA monitor to the board's VGA port.
-
-- Image of NEXYS A7-50T FPGA board
   
  <img src=".github/img/NEXYS_A7.png" alt="Board Image" width="500"/>
 
@@ -100,6 +104,8 @@ The project is designed for the Digilent Nexys A7-50T FPGA board. Simply connect
 ## User Manual
 
 ### 1. Connection
+
+![VGA Connection](.github/img/vga_connection.png)
 
 ### 2. Controls
 The game is controlled using the directional push buttons (button cross) on the Nexys A7. Note that the movement is split between the left/right and up/down buttons for two players.
@@ -113,18 +119,13 @@ The game is controlled using the directional push buttons (button cross) on the 
 | **Player 2** | **Move Down** | `BTND` | Moves the right paddle down            |
 
 #### Layout Visualization
-To make it easier for players to understand the button cross mapping:
-```text
-          [BTNU] (P1 Up)
-                ^
- (P2 Up) [BTNL] + [BTNR] (P1 Down)
-                v
-          [BTND] (P2 Down)
 
-          [BTNC] (RESET)
-```
+![Button Layout](.github/img/controls.png)
+
 ### 3. Switching modes
-- TODO:
+- SW0: `ON/OFF` - Toggles between the pong game and the static test pattern (SMPTE Color Bars).
+- SW1: `ON/OFF` - In Pong mode, toggles **Player 2** between human control (using `BTNL` and `BTND`) and AI control.
+- SW2: `ON/OFF` - In Pong mode, toggles **Player 1** between human control (using `BTNU` and `BTNR`) and AI control.
 ### 4. Gameplay rules
 The rules of Pong are straightforward and simple. This classic arcade game simulates table tennis, where you control your "paddle" and try to deflect the ball so that your opponent misses it.
 #### 4.1. Objective
