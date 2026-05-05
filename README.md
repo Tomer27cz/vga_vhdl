@@ -39,16 +39,15 @@ Gif demonstration of the Pong game mode, showcasing two-AI gameplay
 
 ![Pong Gameplay](.github/img/pong.gif)
 
-## Top-Level Schematic (will be updated with polished versions)
+## Top-Level Schematic
 
-### Pattern Only Top Level:
-![Pattern Schematic](.github/img/pattern_top_schematic.png)
+[![Top-Level Schematic](.github/img/schematic/vga_schematic.png)](.github/img/schematic/vga_schematic.pdf)
 
-### Pong Only Top Level:
-![Pong Schematic](.github/img/pong_top_schematic.png)
+### Vivado Schematic
 
-### VGA Top Level (with mode selection):
-![VGA Top Schematic](.github/img/vga_top_schematic.png)
+[![VGA Top Schematic](.github/img/schematic/vivado/vga_top_schematic.png)](.github/img/schematic/vivado/vga_top_schematic.pdf)
+
+Component test schematic: [Pattern Schematic](.github/img/schematic/vivado/pattern_top_schematic.png), [Pong Schematic](.github/img/schematic/vivado/pong_top_schematic.png)
 
 ## Hardware Interface (I/O Description)
 
@@ -96,16 +95,17 @@ Detailed documentation, interfaces, and testbenches for individual modules can b
 ## Physical Setup
 
 The project is designed for the Digilent Nexys A7-50T FPGA board. Simply connect a VGA monitor to the board's VGA port.
-  
- <img src=".github/img/NEXYS_A7.png" alt="Board Image" width="500"/>
 
-- [**Official documentation** of NEXYS A7-50T FPGA board](https://digilent.com/reference/programmable-logic/nexys-a7/start)
+[**Official documentation** of NEXYS A7-50T FPGA board](https://digilent.com/reference/programmable-logic/nexys-a7/start)
+
+  
+<img src=".github/img/NEXYS_A7.png" alt="Board Image" width="500"/>
 
 ## User Manual
 
 ### 1. Connection
 
-![VGA Connection](.github/img/vga_connection.png)
+<img src=".github/img/vga_connection.png" alt="Board Image" width="500"/>
 
 ### 2. Controls
 The game is controlled using the directional push buttons (button cross) on the Nexys A7. Note that the movement is split between the left/right and up/down buttons for two players.
