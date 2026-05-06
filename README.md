@@ -126,6 +126,9 @@ The game is controlled using the directional push buttons (button cross) on the 
 - SW0: `ON/OFF` - Toggles between the pong game and the static test pattern (SMPTE Color Bars).
 - SW1: `ON/OFF` - In Pong mode, toggles **Player 2** between human control (using `BTNL` and `BTND`) and AI control.
 - SW2: `ON/OFF` - In Pong mode, toggles **Player 1** between human control (using `BTNU` and `BTNR`) and AI control.
+
+![Mode Switches](.github/img/mode-selection.png)
+
 ### 4. Gameplay rules
 The rules of Pong are straightforward and simple. This classic arcade game simulates table tennis, where you control your "paddle" and try to deflect the ball so that your opponent misses it.
 #### 4.1. Objective
