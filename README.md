@@ -92,6 +92,10 @@ Detailed documentation, interfaces, and testbenches for individual modules can b
 * [pong_score.vhd](top/pong_score/src/pong_score_top.vhd): Connects `vga_sync`, `pong_physics`, `pong_draw`, and `score_draw` to display scores on the VGA output.
 * [pong_ai.vhd](top/pong_ai/src/pong_ai_top.vhd): Connects `vga_sync`, `pong_physics`, `pong_draw`, and `pong_ai` so two AI opponents play against each other.
 
+### Resources
+
+![Resource Utilization](.github/img/resources.png)
+
 ## Physical Setup
 
 The project is designed for the Digilent Nexys A7-50T FPGA board. Simply connect a VGA monitor to the board's VGA port.
