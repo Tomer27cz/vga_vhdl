@@ -39,15 +39,15 @@ Gif demonstration of the Pong game mode, showcasing two-AI gameplay
 
 ![Pong Gameplay](.github/img/pong.gif)
 
-## Top-Level Schematic
+## Top-Level Schematic [PDF Version](.github/img/schematic/vga_schematic.pdf)
 
-[![Top-Level Schematic](.github/img/schematic/vga_schematic.png)](.github/img/schematic/vga_schematic.pdf)
+![Top-Level Schematic](.github/img/schematic/vga_schematic.png)
 
-### Vivado Schematic
+### Vivado Schematic [PDF Version](.github/img/schematic/vivado/vga_schematic.pdf)
 
-[![VGA Top Schematic](.github/img/schematic/vivado/vga_top_schematic.png)](.github/img/schematic/vivado/vga_top_schematic.pdf)
+![VGA Top Schematic](.github/img/schematic/vivado/vga_top_schematic.png)
 
-Component test schematic: [Pattern Schematic](.github/img/schematic/vivado/pattern_top_schematic.png), [Pong Schematic](.github/img/schematic/vivado/pong_top_schematic.png)
+#### Component test schematic: [Pattern Schematic](.github/img/schematic/vivado/pattern_top_schematic.png), [Pong Schematic](.github/img/schematic/vivado/pong_top_schematic.png)
 
 ## Hardware Interface (I/O Description)
 
