@@ -142,3 +142,7 @@ The goal is to score more points than your opponent by making the ball ***pass b
 - **Bouncing**: The ball bounces off the top and bottom walls of the playfield and off both players' paddles.
 - **Scoring**: If a player misses the ball and it goes off the screen on their side, the other player scores a point.
 - **Serving**: After each point is scored, the ball is served to the side of the player who just scored.
+
+## Poster
+
+![Poster](.github/img/poster.png)
